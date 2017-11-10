@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Utils">
+      <UniqueIdentifier>{67497af2-7e29-4076-b1a2-89d7ddb0c53b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Utils">
+      <UniqueIdentifier>{eb3a031a-2dec-4f1e-882c-fc3c6f5c7c90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Core">
+      <UniqueIdentifier>{b90e0cf5-5e2c-4b82-ba38-60918a3b4370}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Core">
+      <UniqueIdentifier>{496fcf72-7196-4d29-b9c7-95faa407de1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Core\Resource">
+      <UniqueIdentifier>{1ef33a65-9cd0-4fd4-b542-a375be99e420}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Core\Resource">
+      <UniqueIdentifier>{cf17c173-7d88-41fe-9d63-af99e1779079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Core\Scene">
+      <UniqueIdentifier>{e43e643b-681a-445e-bf91-c93a31a2057b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Core\Scene">
+      <UniqueIdentifier>{04d8ca2b-4281-4692-b094-8028f7866117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Graphics">
+      <UniqueIdentifier>{a7c256f6-0adf-44fb-a35b-eb3e6277071c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Graphics\Render">
+      <UniqueIdentifier>{f82bd8e9-ede9-4adf-876d-c0e7f4d12816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Graphics">
+      <UniqueIdentifier>{b06db23c-1831-406d-8e68-7f215679f8f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Graphics\Render">
+      <UniqueIdentifier>{598fe5fc-23cd-4c00-a4c5-9e99d785c0a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Core\Physic">
+      <UniqueIdentifier>{10b32d6b-62c4-4e3c-9ad2-a9882143c941}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Core\Physic">
+      <UniqueIdentifier>{938f254b-75d1-4fc0-ae16-4cee4c0e3212}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Core\Physic\Particle">
+      <UniqueIdentifier>{4e07d65d-c996-408d-9793-69540c9f29d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Core\Physic\Particle">
+      <UniqueIdentifier>{2a719037-ac72-4fd3-8dce-094bbe49de49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Core\Component">
+      <UniqueIdentifier>{84feef66-11a5-4141-b9fe-f975716a313c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Core\Component">
+      <UniqueIdentifier>{e97a7437-446a-430d-9845-e7ede4486b50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Core\Factory">
+      <UniqueIdentifier>{97c1c2dc-60a7-4393-b243-00fd8c2ee027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Core\Factory">
+      <UniqueIdentifier>{0a36b41e-0a6c-4d3d-9c89-34d829ab30ba}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Main.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Timer.cpp">
+      <Filter>Fichiers sources\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D11RenderSystem.cpp">
+      <Filter>Fichiers sources\Graphics\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application.cpp">
+      <Filter>Fichiers sources\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="inc\DirectXComponentsPCH.cpp">
+      <Filter>Fichiers sources\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vertex.cpp">
+      <Filter>Fichiers sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader.cpp">
+      <Filter>Fichiers sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleSystem.cpp">
+      <Filter>Fichiers sources\Core\Physic\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Particle.cpp">
+      <Filter>Fichiers sources\Core\Physic\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleManager.cpp">
+      <Filter>Fichiers sources\Core\Physic\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pool.cpp">
+      <Filter>Fichiers sources\Core\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IEntity.cpp">
+      <Filter>Fichiers sources\Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Light.cpp">
+      <Filter>Fichiers sources\Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Object.cpp">
+      <Filter>Fichiers sources\Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IFactory.cpp">
+      <Filter>Fichiers sources\Core\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObjectFactory.cpp">
+      <Filter>Fichiers sources\Core\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LightFactory.cpp">
+      <Filter>Fichiers sources\Core\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneManager.cpp">
+      <Filter>Fichiers sources\Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>Fichiers sources\Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml2.cpp">
+      <Filter>Fichiers sources\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IComponent.cpp">
+      <Filter>Fichiers sources\Core\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Keyboard.cpp">
+      <Filter>Fichiers sources\Core\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mouse.cpp">
+      <Filter>Fichiers sources\Core\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderManager.cpp">
+      <Filter>Fichiers sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshManager.cpp">
+      <Filter>Fichiers sources\Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader.cpp">
+      <Filter>Fichiers sources\Utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\Timer.h">
+      <Filter>Fichiers d%27en-tête\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\D3D11RenderSystem.h">
+      <Filter>Fichiers d%27en-tête\Graphics\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Application.h">
+      <Filter>Fichiers d%27en-tête\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\DirectXComponentsPCH.h">
+      <Filter>Fichiers d%27en-tête\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Vertex.h">
+      <Filter>Fichiers d%27en-tête\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Shader.h">
+      <Filter>Fichiers d%27en-tête\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ParticleSystem.h">
+      <Filter>Fichiers d%27en-tête\Core\Physic\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Particle.h">
+      <Filter>Fichiers d%27en-tête\Core\Physic\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ParticleManager.h">
+      <Filter>Fichiers d%27en-tête\Core\Physic\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Pool.h">
+      <Filter>Fichiers d%27en-tête\Core\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\IEntity.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Light.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Object.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\IFactory.h">
+      <Filter>Fichiers d%27en-tête\Core\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ObjectFactory.h">
+      <Filter>Fichiers d%27en-tête\Core\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\LightFactory.h">
+      <Filter>Fichiers d%27en-tête\Core\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SceneManager.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Camera.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\tinyxml2.h">
+      <Filter>Fichiers d%27en-tête\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\IComponent.h">
+      <Filter>Fichiers d%27en-tête\Core\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Keyboard.h">
+      <Filter>Fichiers d%27en-tête\Core\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Mouse.h">
+      <Filter>Fichiers d%27en-tête\Core\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ShaderManager.h">
+      <Filter>Fichiers d%27en-tête\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MeshManager.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MeshLoader.h">
+      <Filter>Fichiers d%27en-tête\Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FabEngine.rc">
+      <Filter>Fichiers de ressources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="directx.ico">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
