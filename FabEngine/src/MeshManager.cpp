@@ -17,17 +17,17 @@ namespace Fab
 
 	void MeshManager::Load(std::string fileName, std::string name)
 	{
-		std::shared_ptr<Object> object(new Object());
-		_meshLoader.Load(fileName, *object);
-		InsertMesh(name, object);
+		MeshPtr mesh(new Mesh());
+		_meshLoader.Load(fileName, *mesh);
+		InsertMesh(name, mesh);
 	}
 
-	void MeshManager::InsertMesh(std::string name, std::shared_ptr<Object> object)
+	void MeshManager::InsertMesh(std::string name, MeshPtr mesh)
 	{
-		_meshes.insert(std::pair<std::string, std::shared_ptr<Object>>(name, object));
+		_meshes.insert(std::pair<std::string, MeshPtr>(name, mesh));
 	}
 
-	Object& MeshManager::GetMesh(std::string name)
+	Mesh& MeshManager::GetMesh(std::string name)
 	{
 		auto found = _meshes.find(name);
 		assert(found != _meshes.end());
@@ -35,7 +35,7 @@ namespace Fab
 		return *found->second;
 	}
 
-	std::shared_ptr<Object> MeshManager::GetMeshPtr(std::string name)
+	MeshPtr MeshManager::GetMeshPtr(std::string name)
 	{
 		auto found = _meshes.find(name);
 		assert(found != _meshes.end());

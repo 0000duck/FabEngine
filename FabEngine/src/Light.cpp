@@ -11,6 +11,10 @@ namespace Fab
 	{
 	}
 
+	void Light::Initialise()
+	{
+	}
+
 	void Light::Draw()
 	{
 	}

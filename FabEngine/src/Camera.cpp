@@ -11,7 +11,8 @@ namespace Fab
 	const CameraMode Camera::DefaultMode        = CameraMode::FLY;
 
 	Camera::Camera()
-		: _fov(DefaultFov)
+		: _renderSystem(D3D11RenderSystem::GetRenderSystem())
+		, _fov(DefaultFov)
 		, _nearZ(DefaultNearZ)
 		, _farZ(DefaultFarZ)
 		, _translationSpeed(DefaultTranslationSpeed)
@@ -23,7 +24,8 @@ namespace Fab
 	}
 
 	Camera::Camera(float fov, float nearZ, float farZ, float translationSpeed, float rotationSpeed, CameraMode mode)
-		: _fov(fov)
+		: _renderSystem(D3D11RenderSystem::GetRenderSystem())
+		, _fov(fov)
 		, _nearZ(nearZ)
 		, _farZ(farZ)
 		, _translationSpeed(translationSpeed)
@@ -40,8 +42,8 @@ namespace Fab
 
 	void Camera::Initialise()
 	{
-		_eye = XMFLOAT3(1.0f, 0.0f, 0.0f);
-		_at = XMFLOAT3(0.0f, -0.4f, 1.0f);
+		_right = XMFLOAT3(1.0f, 0.0f, 0.0f);
+		_look = XMFLOAT3(0.0f, -0.4f, 1.0f);
 		_up = XMFLOAT3(0.0f, 1.0f, 0.0f);
 
 		_position = XMFLOAT3(-3.0f, 1.5f, -7.0f);
@@ -54,8 +56,7 @@ namespace Fab
 
 	void Camera::Draw()
 	{
-		D3D11RenderSystem& renderSystem = D3D11RenderSystem::GetRenderSystem();
-		ConstantBuffer*    pConstantBufferUpdate = renderSystem.GetConstantBufferUpdate();
+		ConstantBuffer* pConstantBufferUpdate = _renderSystem.GetConstantBufferUpdate();
 
 		XMMATRIX view = XMLoadFloat4x4(&_view);
 		XMMATRIX projection = XMLoadFloat4x4(&_projection);
@@ -66,8 +67,8 @@ namespace Fab
 
 	void Camera::Update(float deltaTime, float totalTime)
 	{
-		Mouse& mouse       = static_cast<Mouse&>(Application::GetApplication().GetComponent(ComponentType::MOUSE));
 		Keyboard& keyboard = static_cast<Keyboard&>(Application::GetApplication().GetComponent(ComponentType::KEYBOARD));
+		Mouse& mouse       = static_cast<Mouse&>(Application::GetApplication().GetComponent(ComponentType::MOUSE));
 
 		if (keyboard.IsKeyPressed(KeyName::SHIFT))
 			return;
@@ -91,8 +92,7 @@ namespace Fab
 		}break;
 
 		case CameraMode::WALK: {
-			D3D11RenderSystem& renderSystem = D3D11RenderSystem::GetRenderSystem();
-			float centerPosition = (float)renderSystem.GetWindowWidth() / 2;
+			float centerPosition = (float)_renderSystem.GetWindowWidth() / 2;
 
 			float angleY = (mouse.GetDistanceX() / centerPosition) * G_PI * 2.0f;
 			RotateY(-_lastAngle);
@@ -134,13 +134,12 @@ namespace Fab
 
 	void Camera::ComputeProjectionMatrix()
 	{
-		D3D11RenderSystem& renderSystem = D3D11RenderSystem::GetRenderSystem();
-		UINT windowWidth                = renderSystem.GetWindowWidth();
-		UINT windowHeight               = renderSystem.GetWindowHeight();
+		UINT windowWidth  = _renderSystem.GetWindowWidth();
+		UINT windowHeight = _renderSystem.GetWindowHeight();
 
-		XMVECTOR R = XMLoadFloat3(&_eye);
+		XMVECTOR R = XMLoadFloat3(&_right);
 		XMVECTOR U = XMLoadFloat3(&_up);
-		XMVECTOR L = XMLoadFloat3(&_at);
+		XMVECTOR L = XMLoadFloat3(&_look);
 		XMVECTOR P = XMLoadFloat3(&_position);
 
 		// Keep camera's axes orthogonal to each other and of unit length.
@@ -155,13 +154,13 @@ namespace Fab
 		float y = -XMVectorGetX(XMVector3Dot(P, U));
 		float z = -XMVectorGetX(XMVector3Dot(P, L));
 
-		XMStoreFloat3(&_eye, R);
+		XMStoreFloat3(&_right, R);
 		XMStoreFloat3(&_up, U);
-		XMStoreFloat3(&_at, L);
+		XMStoreFloat3(&_look, L);
 
-		_view(0, 0) = _eye.x;
-		_view(1, 0) = _eye.y;
-		_view(2, 0) = _eye.z;
+		_view(0, 0) = _right.x;
+		_view(1, 0) = _right.y;
+		_view(2, 0) = _right.z;
 		_view(3, 0) = x;
 
 		_view(0, 1) = _up.x;
@@ -169,9 +168,9 @@ namespace Fab
 		_view(2, 1) = _up.z;
 		_view(3, 1) = y;
 
-		_view(0, 2) = _at.x;
-		_view(1, 2) = _at.y;
-		_view(2, 2) = _at.z;
+		_view(0, 2) = _look.x;
+		_view(1, 2) = _look.y;
+		_view(2, 2) = _look.z;
 		_view(3, 2) = z;
 
 		_view(0, 3) = 0.0f;
@@ -187,9 +186,9 @@ namespace Fab
 		_oldPosition = _position;
 		XMMATRIX R = XMMatrixRotationX(angle);
 
-		XMStoreFloat3(&_eye, XMVector3TransformNormal(XMLoadFloat3(&_eye), R));
+		XMStoreFloat3(&_right, XMVector3TransformNormal(XMLoadFloat3(&_right), R));
 		XMStoreFloat3(&_up, XMVector3TransformNormal(XMLoadFloat3(&_up), R));
-		XMStoreFloat3(&_at, XMVector3TransformNormal(XMLoadFloat3(&_at), R));
+		XMStoreFloat3(&_look, XMVector3TransformNormal(XMLoadFloat3(&_look), R));
 
 		ComputeProjectionMatrix();
 	}
@@ -199,9 +198,9 @@ namespace Fab
 		_oldPosition = _position;
 		XMMATRIX R = XMMatrixRotationY(angle);
 
-		XMStoreFloat3(&_eye, XMVector3TransformNormal(XMLoadFloat3(&_eye), R));
+		XMStoreFloat3(&_right, XMVector3TransformNormal(XMLoadFloat3(&_right), R));
 		XMStoreFloat3(&_up, XMVector3TransformNormal(XMLoadFloat3(&_up), R));
-		XMStoreFloat3(&_at, XMVector3TransformNormal(XMLoadFloat3(&_at), R));
+		XMStoreFloat3(&_look, XMVector3TransformNormal(XMLoadFloat3(&_look), R));
 
 		ComputeProjectionMatrix();
 	}
@@ -211,45 +210,45 @@ namespace Fab
 		_oldPosition = _position;
 		XMMATRIX R = XMMatrixRotationZ(angle);
 
-		XMStoreFloat3(&_eye, XMVector3TransformNormal(XMLoadFloat3(&_eye), R));
+		XMStoreFloat3(&_right, XMVector3TransformNormal(XMLoadFloat3(&_right), R));
 		XMStoreFloat3(&_up, XMVector3TransformNormal(XMLoadFloat3(&_up), R));
-		XMStoreFloat3(&_at, XMVector3TransformNormal(XMLoadFloat3(&_at), R));
+		XMStoreFloat3(&_look, XMVector3TransformNormal(XMLoadFloat3(&_look), R));
 
 		ComputeProjectionMatrix();
 	}
 
 	void Camera::Pitch(float angle)
 	{
-		XMMATRIX T = XMMatrixRotationAxis(XMLoadFloat3(&_eye), angle);
+		XMMATRIX T = XMMatrixRotationAxis(XMLoadFloat3(&_right), angle);
 
 		XMVECTOR up = XMVector3TransformCoord(XMLoadFloat3(&_up), T);
-		XMVECTOR at = XMVector3TransformCoord(XMLoadFloat3(&_at), T);
+		XMVECTOR look = XMVector3TransformCoord(XMLoadFloat3(&_look), T);
 
 		XMStoreFloat3(&_up, up);
-		XMStoreFloat3(&_at, at);
+		XMStoreFloat3(&_look, look);
 	}
 
 	void Camera::Yaw(float angle)
 	{
 		XMMATRIX T = XMMatrixRotationY(angle);
 
-		XMVECTOR eye = XMVector3TransformCoord(XMLoadFloat3(&_eye), T);
-		XMVECTOR at = XMVector3TransformCoord(XMLoadFloat3(&_at), T);
+		XMVECTOR right = XMVector3TransformCoord(XMLoadFloat3(&_right), T);
+		XMVECTOR look = XMVector3TransformCoord(XMLoadFloat3(&_look), T);
 
-		XMStoreFloat3(&_eye, eye);
-		XMStoreFloat3(&_at, at);
+		XMStoreFloat3(&_right, right);
+		XMStoreFloat3(&_look, look);
 
 		ComputeProjectionMatrix();
 	}
 
 	void Camera::Roll(float angle)
 	{
-		XMMATRIX T = XMMatrixRotationAxis(XMLoadFloat3(&_at), angle);
+		XMMATRIX T = XMMatrixRotationAxis(XMLoadFloat3(&_look), angle);
 
-		XMVECTOR eye = XMVector3TransformCoord(XMLoadFloat3(&_eye), T);
+		XMVECTOR right = XMVector3TransformCoord(XMLoadFloat3(&_right), T);
 		XMVECTOR up = XMVector3TransformCoord(XMLoadFloat3(&_up), T);
 		
-		XMStoreFloat3(&_eye, eye);
+		XMStoreFloat3(&_right, right);
 		XMStoreFloat3(&_up, up);
 	}
 
@@ -265,9 +264,9 @@ namespace Fab
 	{
 		_oldPosition = _position;
 		XMVECTOR s = XMVectorReplicate(distance);
-		XMVECTOR r = XMLoadFloat3(&_at);
+		XMVECTOR l = XMLoadFloat3(&_look);
 		XMVECTOR p = XMLoadFloat3(&_position);
-		XMStoreFloat3(&_position, XMVectorMultiplyAdd(s, r, p));
+		XMStoreFloat3(&_position, XMVectorMultiplyAdd(s, l, p));
 
 		ComputeProjectionMatrix();
 	}
@@ -276,9 +275,9 @@ namespace Fab
 	{
 		_oldPosition = _position;
 		XMVECTOR s = XMVectorReplicate(distance);
-		XMVECTOR r = XMLoadFloat3(&_at);
+		XMVECTOR l = XMLoadFloat3(&_look);
 		XMVECTOR p = XMLoadFloat3(&_position);
-		XMStoreFloat3(&_position, XMVectorMultiplyAdd(s, r, p));
+		XMStoreFloat3(&_position, XMVectorMultiplyAdd(s, l, p));
 		_position.y = _oldPosition.y;
 
 		ComputeProjectionMatrix();
@@ -288,16 +287,16 @@ namespace Fab
 	{
 		XMFLOAT3 movementAmount(distanceX, distanceY, distanceZ);
 
-		XMVECTOR eye      = XMLoadFloat3(&_eye);
-		XMVECTOR at       = XMLoadFloat3(&_at);
+		XMVECTOR right    = XMLoadFloat3(&_right);
+		XMVECTOR look     = XMLoadFloat3(&_look);
 		XMVECTOR up       = XMLoadFloat3(&_up);
 		XMVECTOR position = XMLoadFloat3(&_position);
 		XMVECTOR movement = XMLoadFloat3(&movementAmount);
 
-		XMVECTOR strafe = eye * XMVectorGetX(movement);
+		XMVECTOR strafe = right * XMVectorGetX(movement);
 		position += strafe;
 
-		XMVECTOR forward = at * XMVectorGetY(movement);
+		XMVECTOR forward = look * XMVectorGetY(movement);
 		position += forward;
 
 		XMVECTOR climb = up * XMVectorGetZ(movement);
@@ -348,14 +347,14 @@ namespace Fab
 		return _position;
 	}
 
-	XMFLOAT3& Camera::GetEye()
+	XMFLOAT3& Camera::GetRight()
 	{
-		return _eye;
+		return _right;
 	}
 
-	XMFLOAT3& Camera::GetAt()
+	XMFLOAT3& Camera::GetLook()
 	{
-		return _at;
+		return _look;
 	}
 
 	XMFLOAT3& Camera::GetUp()

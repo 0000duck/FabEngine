@@ -6,6 +6,8 @@ using namespace DirectX;
 
 namespace Fab
 {
+	class D3D11RenderSystem;
+
 	class Shader
 	{
 	public:
@@ -28,6 +30,8 @@ namespace Fab
 		static const D3D11_INPUT_ELEMENT_DESC VertexColor[5];
 
 	private:
+		D3D11RenderSystem&  _renderSystem;
+
 		WCHAR*              _szFileName;
 
 		ID3DBlob*           _pVertexShaderBlob;
@@ -36,4 +40,6 @@ namespace Fab
 		ID3D11PixelShader*  _pPixelShader;
 		ID3D11InputLayout*  _pInputLayout;
 	};
+
+	typedef std::shared_ptr<Shader> ShaderPtr;
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <DirectXComponentsPCH.h>
-#include "Object.h"
+#include "Mesh.h"
 
 namespace Fab
 {
@@ -10,6 +10,6 @@ namespace Fab
 	public:
 		MeshLoader();
 		~MeshLoader();
-		void Load(std::string fileName, Object& object);
+		void Load(std::string fileName, Mesh& object);
 	};
 }

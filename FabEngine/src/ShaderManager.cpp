@@ -14,15 +14,15 @@ namespace Fab
 	void ShaderManager::Initialise()
 	{
 		{
-			std::shared_ptr<Shader> color(new Shader(L"shaders/color.fx"));
+			ShaderPtr color(new Shader(L"shaders/color.fx"));
 			color->Compile();
 			InsertShader("color", color);
 		}
 	}
 
-	void ShaderManager::InsertShader(std::string name, std::shared_ptr<Shader> shader)
+	void ShaderManager::InsertShader(std::string name, ShaderPtr shader)
 	{
-		_shaders.insert(std::pair<std::string, std::shared_ptr<Shader>>(name, shader));
+		_shaders.insert(std::pair<std::string, ShaderPtr>(name, shader));
 	}
 
 	Shader& ShaderManager::GetShader(std::string name)
@@ -33,7 +33,7 @@ namespace Fab
 		return *found->second;
 	}
 
-	std::shared_ptr<Shader> ShaderManager::GetShaderPtr(std::string name)
+	ShaderPtr ShaderManager::GetShaderPtr(std::string name)
 	{
 		auto found = _shaders.find(name);
 		assert(found != _shaders.end());

@@ -11,6 +11,10 @@ namespace Fab
 	{
 	}
 
+	void Particle::Initialise()
+	{
+	}
+
 	void Particle::Draw()
 	{
 	}

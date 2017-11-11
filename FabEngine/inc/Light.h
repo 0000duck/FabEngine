@@ -10,6 +10,7 @@ namespace Fab
 	public:
 		Light();
 		~Light();
+		void Initialise() override;
 		void Draw() override;
 		void Update(float deltaTime, float totalTime) override;
 	};

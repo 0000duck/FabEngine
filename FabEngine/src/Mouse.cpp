@@ -5,6 +5,7 @@ namespace Fab
 {
 	Mouse::Mouse()
 		: IComponent(ComponentType::MOUSE)
+		, _renderSystem(D3D11RenderSystem::GetRenderSystem())
 		, _position(XMFLOAT2(0.0f,0.0f))
 		, _oldPosition(_position)
 		, _centerPosition(_position)
@@ -18,9 +19,8 @@ namespace Fab
 
 	void Mouse::Initialise()
 	{
-		D3D11RenderSystem& renderSystem = D3D11RenderSystem::GetRenderSystem();
-		_oldPosition.x = (float)renderSystem.GetWindowWidth() / 2;
-		_oldPosition.y = (float)renderSystem.GetWindowHeight() / 2;
+		_oldPosition.x = (float)_renderSystem.GetWindowWidth() / 2;
+		_oldPosition.y = (float)_renderSystem.GetWindowHeight() / 2;
 		_centerPosition = _oldPosition;
 
 		_mouseButtons.push_back(MouseButton(MouseButtonName::LEFT));
@@ -31,10 +31,8 @@ namespace Fab
 
 	void Mouse::Update(MSG* message, float deltaTime, float totalTime)
 	{
-		D3D11RenderSystem& renderSystem = D3D11RenderSystem::GetRenderSystem();
-
-		_centerPosition.x = (float)renderSystem.GetWindowWidth() / 2;
-		_centerPosition.y = (float)renderSystem.GetWindowHeight() / 2;
+		_centerPosition.x = (float)_renderSystem.GetWindowWidth() / 2;
+		_centerPosition.y = (float)_renderSystem.GetWindowHeight() / 2;
 
 		_position.x = (float) GET_X_LPARAM(message->lParam);
 		_position.y = (float) GET_Y_LPARAM(message->lParam);

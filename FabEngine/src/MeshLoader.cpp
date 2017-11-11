@@ -11,7 +11,7 @@ namespace Fab
 	{
 	}
 
-	void MeshLoader::Load(std::string fileName, Object& object)
+	void MeshLoader::Load(std::string fileName, Mesh& mesh)
 	{
 		Assimp::Importer importer;
 
@@ -21,8 +21,17 @@ namespace Fab
 			aiProcess_JoinIdenticalVertices |
 			aiProcess_SortByPType);
 
-		assert(scene);
+		assert(scene != nullptr);
 
-		//object.Build();
+		if (scene->HasMeshes())
+		{
+			for (unsigned int i = 0; i < scene->mNumMeshes; i++)
+			{
+				aiMesh* aiMesh = scene->mMeshes[i];
+				mesh.GetPosition();
+			}
+		}
+
+		//mesh.Build();
 	}
 }

@@ -12,6 +12,7 @@ namespace Fab
 	public:
 		Particle();
 		~Particle();
+		void Initialise() override;
 		void Draw() override;
 		void Update(float deltaTime, float totalTime) override;
 

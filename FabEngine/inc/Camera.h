@@ -8,6 +8,10 @@ using namespace DirectX;
 
 namespace Fab
 {
+	class D3D11RenderSystem;
+	class Keyboard;
+	class Mouse;
+
 	enum class CameraMode
 	{
 		WALK,
@@ -45,8 +49,8 @@ namespace Fab
 		CameraMode  GetMode();
 
 		XMFLOAT3&   GetPosition();
-		XMFLOAT3&   GetEye();
-		XMFLOAT3&   GetAt();
+		XMFLOAT3&   GetRight();
+		XMFLOAT3&   GetLook();
 		XMFLOAT3&   GetUp();
 
 		XMFLOAT4X4& GetView();
@@ -61,24 +65,25 @@ namespace Fab
 		static const CameraMode DefaultMode;
 
 	private:
-		XMFLOAT3   _position;
-		XMFLOAT3   _oldPosition;
+		D3D11RenderSystem& _renderSystem;
 
-		XMFLOAT3   _eye;
-		XMFLOAT3   _at;
-		XMFLOAT3   _up;
+		XMFLOAT3           _position;
+		XMFLOAT3           _oldPosition;
+		XMFLOAT3           _right;
+		XMFLOAT3           _look;
+		XMFLOAT3           _up;
 
-		float      _fov;
-		float      _nearZ;
-		float      _farZ;
-		float      _rotationSpeed;
-		float      _translationSpeed;
+		float              _fov;
+		float              _nearZ;
+		float              _farZ;
+		float              _rotationSpeed;
+		float              _translationSpeed;
 
-		float      _lastAngle;
+		float              _lastAngle;
 
-		XMFLOAT4X4 _view;
-		XMFLOAT4X4 _projection;
+		XMFLOAT4X4         _view;
+		XMFLOAT4X4         _projection;
 
-		CameraMode _mode;
+		CameraMode         _mode;
 	};
 }

@@ -73,6 +73,18 @@
     <Filter Include="Fichiers sources\Core\Factory">
       <UniqueIdentifier>{0a36b41e-0a6c-4d3d-9c89-34d829ab30ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Core\Scene\Model">
+      <UniqueIdentifier>{6dcf7cf3-5be9-49f5-aa55-b23b1aaa7209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Core\Scene\Model">
+      <UniqueIdentifier>{9393f3ce-a702-4419-b483-148b8787204f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Core\Scene\Light">
+      <UniqueIdentifier>{16503ee9-4da0-4666-8fb2-1f749a0af10c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Core\Scene\Light">
+      <UniqueIdentifier>{acf9010f-db23-461d-aec5-2449e91faec8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -111,16 +123,7 @@
     <ClCompile Include="src\IEntity.cpp">
       <Filter>Fichiers sources\Core\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Light.cpp">
-      <Filter>Fichiers sources\Core\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Object.cpp">
-      <Filter>Fichiers sources\Core\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="src\IFactory.cpp">
-      <Filter>Fichiers sources\Core\Factory</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ObjectFactory.cpp">
       <Filter>Fichiers sources\Core\Factory</Filter>
     </ClCompile>
     <ClCompile Include="src\LightFactory.cpp">
@@ -148,10 +151,22 @@
       <Filter>Fichiers sources\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\MeshManager.cpp">
-      <Filter>Fichiers sources\Core\Scene</Filter>
+      <Filter>Fichiers sources\Core\Scene\Model</Filter>
     </ClCompile>
     <ClCompile Include="src\MeshLoader.cpp">
-      <Filter>Fichiers sources\Utils</Filter>
+      <Filter>Fichiers sources\Core\Scene\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Light.cpp">
+      <Filter>Fichiers sources\Core\Scene\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mesh.cpp">
+      <Filter>Fichiers sources\Core\Scene\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshFactory.cpp">
+      <Filter>Fichiers sources\Core\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Model.cpp">
+      <Filter>Fichiers sources\Core\Scene\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,16 +203,7 @@
     <ClInclude Include="inc\IEntity.h">
       <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Light.h">
-      <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Object.h">
-      <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="inc\IFactory.h">
-      <Filter>Fichiers d%27en-tête\Core\Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\ObjectFactory.h">
       <Filter>Fichiers d%27en-tête\Core\Factory</Filter>
     </ClInclude>
     <ClInclude Include="inc\LightFactory.h">
@@ -225,10 +231,22 @@
       <Filter>Fichiers d%27en-tête\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\MeshManager.h">
-      <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
+      <Filter>Fichiers d%27en-tête\Core\Scene\Model</Filter>
     </ClInclude>
     <ClInclude Include="inc\MeshLoader.h">
-      <Filter>Fichiers d%27en-tête\Utils</Filter>
+      <Filter>Fichiers d%27en-tête\Core\Scene\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Light.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Model.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Mesh.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MeshFactory.h">
+      <Filter>Fichiers d%27en-tête\Core\Factory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

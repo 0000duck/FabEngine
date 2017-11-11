@@ -13,7 +13,8 @@ namespace Fab
 	};
 
 	Shader::Shader(WCHAR* szFileName)
-		: _pVertexShaderBlob(nullptr)
+		: _renderSystem(D3D11RenderSystem::GetRenderSystem())
+		, _pVertexShaderBlob(nullptr)
 		, _pVertexShader(nullptr)
 		, _pPixelShader(nullptr)
 		, _pInputLayout(nullptr)
@@ -24,9 +25,8 @@ namespace Fab
 	HRESULT Shader::Compile()
 	{
 		HRESULT hr = S_OK;
-		D3D11RenderSystem& renderSystem = D3D11RenderSystem::GetRenderSystem();
-		ID3D11DeviceContext** pContext = renderSystem.GetPImmediateContext();
-		ID3D11Device** pd3dDevice = renderSystem.GetPd3dDevice();
+		ID3D11DeviceContext** pContext = _renderSystem.GetPImmediateContext();
+		ID3D11Device** pd3dDevice      = _renderSystem.GetPd3dDevice();
 
 		//Create Vertex SHader
 		hr = CompileVertexShader();
@@ -92,8 +92,7 @@ namespace Fab
 
 	void Shader::Use()
 	{
-		D3D11RenderSystem& renderSystem = D3D11RenderSystem::GetRenderSystem();
-		ID3D11DeviceContext** pContext = renderSystem.GetPImmediateContext();
+		ID3D11DeviceContext** pContext = _renderSystem.GetPImmediateContext();
 
 		(*pContext)->IASetInputLayout(_pInputLayout);
 		(*pContext)->VSSetShader(_pVertexShader, nullptr, 0);

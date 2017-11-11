@@ -149,9 +149,10 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\MeshLoader.cpp" />
     <ClCompile Include="src\MeshManager.cpp" />
+    <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
-    <ClCompile Include="src\Object.cpp" />
-    <ClCompile Include="src\ObjectFactory.cpp" />
+    <ClCompile Include="src\Mesh.cpp" />
+    <ClCompile Include="src\MeshFactory.cpp" />
     <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\ParticleManager.cpp" />
     <ClCompile Include="src\ParticleSystem.cpp" />
@@ -176,9 +177,10 @@
     <ClInclude Include="inc\LightFactory.h" />
     <ClInclude Include="inc\MeshLoader.h" />
     <ClInclude Include="inc\MeshManager.h" />
+    <ClInclude Include="inc\Model.h" />
     <ClInclude Include="inc\Mouse.h" />
-    <ClInclude Include="inc\Object.h" />
-    <ClInclude Include="inc\ObjectFactory.h" />
+    <ClInclude Include="inc\Mesh.h" />
+    <ClInclude Include="inc\MeshFactory.h" />
     <ClInclude Include="inc\Particle.h" />
     <ClInclude Include="inc\ParticleManager.h" />
     <ClInclude Include="inc\ParticleSystem.h" />

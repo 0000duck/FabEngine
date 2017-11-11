@@ -12,12 +12,12 @@ namespace Fab
 	public:
 		ShaderManager();
 		~ShaderManager();
-		void                    Initialise();
-		void                    InsertShader(std::string name, std::shared_ptr<Shader> shader);
-		Shader&                 GetShader(std::string name);
-		std::shared_ptr<Shader> GetShaderPtr(std::string name);
+		void      Initialise();
+		void      InsertShader(std::string name, ShaderPtr shader);
+		Shader&   GetShader(std::string name);
+		ShaderPtr GetShaderPtr(std::string name);
 
 	private:
-		std::map<std::string, std::shared_ptr<Shader>> _shaders;
+		std::map<std::string, ShaderPtr> _shaders;
 	};
 }

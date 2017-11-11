@@ -50,6 +50,8 @@ namespace Fab
 		void             UpdateState(MouseButtonName name, MouseButtonState state);
 
 	private:
+		D3D11RenderSystem&       _renderSystem;
+
 		XMFLOAT2                 _position;
 		XMFLOAT2                 _oldPosition;
 		XMFLOAT2                 _centerPosition;
