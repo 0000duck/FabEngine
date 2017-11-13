@@ -23,6 +23,8 @@ struct VS_INPUT
     float4 Position : POSITION;
     float4 Color    : COLOR0;
     float3 Normal   : NORMAL;
+	float3 Tangent  : TANGENT;
+	float3 Binormal : BINORMAL;
 };
 
 struct VS_OUTPUT

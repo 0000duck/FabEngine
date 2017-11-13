@@ -24,11 +24,7 @@ namespace Fab
 	{
 		UpdateAmbientColor();
 
-		//_modelManager.Load("models/terminator.obj", "terminator");
-		//_modelManager.Load("models/plan.blend", "plan");
-		//_modelManager.Load("models/sphere.blend", "sphere");
-		//_modelManager.Load("models/small-landscape.blend", "landscape");
-		_modelManager.Load("models/big-monkey.blend", "monkey");
+		_modelManager.Load("models/monkey-big.blend", "monkey");
 
 		{
 			Model model;

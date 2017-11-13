@@ -14,8 +14,10 @@ namespace Fab
 	{
 		std::vector<VertexData>   Vertices;
 		std::vector<WORD>         Indices;
+		bool                      HasColor;
 
 		MeshData()
+			: HasColor(false)
 		{
 		}
 

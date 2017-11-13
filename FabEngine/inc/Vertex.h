@@ -12,8 +12,8 @@ namespace Fab
 		XMFLOAT3 Position;
 		XMFLOAT4 Color;
 		XMFLOAT3 Normal;
-		//XMFLOAT3 Tangent;
-		//XMFLOAT3 BiNormal;
+		XMFLOAT3 Tangent;
+		XMFLOAT3 BiNormal;
 
 		VertexData()
 		{
@@ -23,12 +23,12 @@ namespace Fab
 			: Position(position)
 			, Color(color)
 			, Normal(position)
-			//, Tangent(position)
-			//, BiNormal(position)
+			, Tangent(position)
+			, BiNormal(position)
 		{
 		}
 
-		/*VertexData(XMFLOAT3 position, XMFLOAT4 color, XMFLOAT3 normal)
+		VertexData(XMFLOAT3 position, XMFLOAT4 color, XMFLOAT3 normal)
 			: Position(position)
 			, Color(color)
 			, Normal(normal)
@@ -44,6 +44,6 @@ namespace Fab
 			, Tangent(tangent)
 			, BiNormal(biNormal)
 		{
-		}*/
+		}
 	};
 }

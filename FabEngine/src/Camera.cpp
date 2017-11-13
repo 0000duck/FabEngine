@@ -18,6 +18,7 @@ namespace Fab
 		, _translationSpeed(DefaultTranslationSpeed)
 		, _rotationSpeed(DefaultRotationSpeed)
 		, _mode(DefaultMode)
+		, _activated(false)
 		, IComponent(ComponentType::CAMERA)
 	{
 		Initialise();
@@ -43,7 +44,7 @@ namespace Fab
 	void Camera::Initialise()
 	{
 		_right = XMFLOAT3(1.0f, 0.0f, 0.0f);
-		_look = XMFLOAT3(0.0f, -0.45f, 1.5f);
+		_look = XMFLOAT3(0.0f, -0.5f, 1.5f);
 		_up = XMFLOAT3(0.0f, 1.0f, 0.0f);
 
 		_position = XMFLOAT3(0.0f, 2.0f, -6.0f);
@@ -75,7 +76,12 @@ namespace Fab
 		Keyboard& keyboard = static_cast<Keyboard&>(Application::GetApplication().GetComponent(ComponentType::KEYBOARD));
 		Mouse& mouse       = static_cast<Mouse&>(Application::GetApplication().GetComponent(ComponentType::MOUSE));
 
-		if (keyboard.IsKeyPressed(KeyName::SHIFT))
+		if (keyboard.IsKeyPressed(KeyName::SHIFT) && _activated)
+			_activated = false;
+		else if (keyboard.IsKeyPressed(KeyName::TAB) && !_activated)
+			_activated = true;
+
+		if (!_activated)
 			return;
 
 		switch (_mode)

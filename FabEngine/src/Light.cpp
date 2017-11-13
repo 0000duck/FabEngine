@@ -3,7 +3,11 @@
 
 namespace Fab
 {
-	Light::Light()
+	const XMFLOAT4 Light::DefaultColor = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+
+	Light::Light(LightType type)
+		: _type(type)
+		, _color(DefaultColor)
 	{
 	}
 
@@ -11,15 +15,18 @@ namespace Fab
 	{
 	}
 
-	void Light::Initialise()
+	void Light::SetColor(XMFLOAT4 color)
 	{
+		_color = color;
 	}
 
-	void Light::Draw()
+	XMFLOAT4 Light::GetColor()
 	{
+		return _color;
 	}
 
-	void Light::Update(float deltaTime, float totalTime)
+	LightType Light::GetType()
 	{
+		return _type;
 	}
 }

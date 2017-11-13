@@ -9,7 +9,7 @@ namespace Fab
 {
 	enum class KeyName
 	{
-		Z, Q, S, D, E, R, SPACE, ESCAPE, CTRL, SHIFT,
+		Z, Q, S, D, E, R, SPACE, ESCAPE, CTRL, SHIFT, TAB,
 		ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ARROW_DOWN
 	};
 

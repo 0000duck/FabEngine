@@ -2,8 +2,6 @@ c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengined.pch
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\vc141.pdb
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\vc141.idb
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\directxcomponentspch.obj
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\light.obj
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\lightfactory.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\main.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\meshloader.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\modelloader.obj
@@ -15,6 +13,7 @@ c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\meshfactory.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\particle.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\particlemanager.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\particlesystem.obj
+c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\pointlight.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\pool.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\scenemanager.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\shader.obj
@@ -25,15 +24,14 @@ c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\vertex.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\application.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\camera.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\d3d11rendersystem.obj
+c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\directionallight.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\icomponent.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\ientity.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\ifactory.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\keyboard.obj
+c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\light.obj
+c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\lightfactory.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\bin\default.cso
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\bin\fabengined.ilk
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\bin\fabengined.exe
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\bin\fabengined.pdb
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.res
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\cl.command.1.tlog
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\cl.read.1.tlog
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\cl.write.1.tlog
@@ -41,9 +39,3 @@ c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\fa
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\fxc.command.1.tlog
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\fxc.read.1.tlog
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\fxc.write.1.tlog
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\link.command.1.tlog
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\link.read.1.tlog
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\link.write.1.tlog
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\rc.command.1.tlog
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\rc.read.1.tlog
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\rc.write.1.tlog

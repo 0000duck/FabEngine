@@ -50,6 +50,7 @@ namespace Fab
 		_keys.push_back(Key(KeyName::ESCAPE, VK_ESCAPE));
 		_keys.push_back(Key(KeyName::CTRL, VK_CONTROL));
 		_keys.push_back(Key(KeyName::SHIFT, VK_SHIFT));
+		_keys.push_back(Key(KeyName::TAB, VK_TAB));
 		_keys.push_back(Key(KeyName::ARROW_LEFT, VK_LEFT));
 		_keys.push_back(Key(KeyName::ARROW_RIGHT, VK_RIGHT));
 		_keys.push_back(Key(KeyName::ARROW_UP, VK_UP));

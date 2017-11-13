@@ -64,6 +64,8 @@ namespace Fab
 
 		if (colorChannelCount > 0)
 		{
+			meshData.HasColor = true;
+
 			for (UINT i = 0; i < colorChannelCount; i++)
 			{
 				aiColor4D* aiVertexColors = aiMesh->mColors[i];

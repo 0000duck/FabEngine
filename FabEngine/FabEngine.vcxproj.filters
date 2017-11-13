@@ -171,6 +171,15 @@
     <ClCompile Include="src\MeshLoader.cpp">
       <Filter>Fichiers sources\Core\Scene\Model</Filter>
     </ClCompile>
+    <ClCompile Include="src\PointLight.cpp">
+      <Filter>Fichiers sources\Core\Scene\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectionalLight.cpp">
+      <Filter>Fichiers sources\Core\Scene\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpotLight.cpp">
+      <Filter>Fichiers sources\Core\Scene\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Timer.h">
@@ -253,6 +262,15 @@
     </ClInclude>
     <ClInclude Include="inc\MeshLoader.h">
       <Filter>Fichiers d%27en-tête\Core\Scene\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\PointLight.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\DirectionalLight.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\SpotLight.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

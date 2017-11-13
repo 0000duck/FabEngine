@@ -85,5 +85,6 @@ namespace Fab
 		XMFLOAT4X4         _projection;
 
 		CameraMode         _mode;
+		bool               _activated;
 	};
 }
