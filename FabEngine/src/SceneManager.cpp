@@ -3,7 +3,11 @@
 
 namespace Fab
 {
+	const XMFLOAT4 SceneManager::DefaultAmbientColor = XMFLOAT4(1.0f, 1.0f, 1.0f, 0.4f);
+
 	SceneManager::SceneManager()
+		: _ambientColor(DefaultAmbientColor)
+		, _renderSystem(D3D11RenderSystem::GetRenderSystem())
 	{
 	}
 
@@ -13,73 +17,126 @@ namespace Fab
 
 	void SceneManager::InsertEntity(std::string name, IEntityPtr entity)
 	{
-		_entities.insert(std::pair<std::string, IEntityPtr>(name, entity));
+		_entities.insert(std::pair<std::string, IEntityPtr>(name, std::move(entity)));
 	}
 
 	void SceneManager::Initialise()
 	{
+		UpdateAmbientColor();
+
+		//_modelManager.Load("models/terminator.obj", "terminator");
+		//_modelManager.Load("models/plan.blend", "plan");
+		//_modelManager.Load("models/sphere.blend", "sphere");
+		//_modelManager.Load("models/small-landscape.blend", "landscape");
+		_modelManager.Load("models/big-monkey.blend", "monkey");
+
 		{
-			ModelPtr model(new Model());
-			MeshPtr cube(new Mesh());
-			cube->Transform(XMMatrixTranslation(0.0f, 0.0f, 0.0f));
-			_meshFactory.CreateCube(cube, 1.0f, 1.0f, 1.0f);
-			model->InsertMesh(cube);
-			InsertEntity("cube-1", model);
+			Model model;
+			_modelManager.GetModel("monkey", model, Colors::Silver);
+			model.GetMeshes().at(0)->Transform(
+				XMMatrixRotationX(-2.0f*G_PI / 3.0f) *
+				XMMatrixRotationY(XM_PI) *
+				XMMatrixScaling(2.0f, 2.0f, 2.0f) *
+				XMMatrixTranslation(0.0f, 0.0f, 0.0f)
+			);
+			InsertEntity("monkey", std::make_shared<Model>(model));
+		}
+
+		/*{
+			Model model;
+			_modelManager.GetModel("landscape", model, Colors::Silver);
+			model.GetMeshes().at(0)->Transform(
+				XMMatrixRotationX(-XM_PIDIV2) *
+				XMMatrixScaling(1.0f, 1.0f, 1.0f)
+			);
+			InsertEntity("landscape", std::make_shared<Model>(model));
+		}*/
+
+		/*
+		{
+			
+			Model model;
+			_modelManager.GetModel("terminator", model, Colors::Red);
+			model.GetMeshes().at(0)->Transform(XMMatrixRotationY(XM_PI)*XMMatrixTranslation(0.0f, 0.0f, 1.0f));
+			InsertEntity("terminator-1", std::make_shared<Model>(model));
 		}
 
 		{
-			ModelPtr model(new Model());
-			MeshPtr cube(new Mesh());
-			cube->Transform(XMMatrixTranslation(2.0f, 0.125f, 0.5f));
-			_meshFactory.CreateCube(cube, 1.25f, 1.25f, 1.25f);
-			model->InsertMesh(cube);
-			InsertEntity("cube-2", model);
+			Model model;
+			_modelManager.GetModel("terminator", model, Colors::Green);
+			model.GetMeshes().at(0)->Transform(XMMatrixTranslation(2.2f, 0.0f, 1.0f));
+			InsertEntity("terminator-2", std::make_shared<Model>(model));
 		}
 
 		{
-			ModelPtr model(new Model());
-			MeshPtr cube(new Mesh());
-			cube->Transform(XMMatrixTranslation(4.0f, 0.0f, 0.0f));
-			_meshFactory.CreateCube(cube, 1.0f, 1.0f, 1.0f);
-			model->InsertMesh(cube);
-			InsertEntity("cube-3", model);
+			Model model;
+			_modelManager.GetModel("terminator", model, Colors::Blue);
+			model.GetMeshes().at(0)->Transform(XMMatrixTranslation(-2.2f, 0.0f, 1.0f));
+			InsertEntity("terminator-3", std::make_shared<Model>(model));
 		}
 
 		{
-			ModelPtr model(new Model());
-			MeshPtr cube(new Mesh());
-			cube->Transform(XMMatrixTranslation(-3.5f, 0.0f, 0.0f));
-			_meshFactory.CreateCube(cube, 1.0f, 1.0f, 1.0f);
-			model->InsertMesh(cube);
-			InsertEntity("cube-4", model);
+			Model model;
+			_modelManager.GetModel("sphere", model, Colors::Magenta);
+			model.GetMeshes().at(0)->Transform(XMMatrixTranslation(0.0f, 0.5f, -2.5f));
+			InsertEntity("sphere", std::make_shared<Model>(model));
 		}
 
 		{
-			ModelPtr model(new Model());
-			MeshPtr sphere(new Mesh());
-			sphere->Transform(XMMatrixTranslation(-2.0f, 0.0f, 0.0f));
-			_meshFactory.CreateSphere(sphere, 0.5f, 20, 20);
-			model->InsertMesh(sphere);
-			InsertEntity("sphere", model);
+			Model model;
+			_modelManager.GetModel("plan", model, Colors::LightSteelBlue);
+			model.GetMeshes().at(0)->Transform(
+				XMMatrixScaling(5.0f, 3.0f, 1.0f) *
+				XMMatrixRotationX(XM_PI) *
+				XMMatrixTranslation(0.0f, 3.0f, 4.0f)
+			);
+			InsertEntity("wall-behind", std::make_shared<Model>(model));
 		}
 
 		{
-			ModelPtr model(new Model());
-			MeshPtr ground(new Mesh());
-			ground->Transform(XMMatrixRotationX(XM_PIDIV2) * XMMatrixTranslation(0.0f, -0.5f, 0.0f));
-			_meshFactory.CreatePlane(ground, 9.5f, 5.0f);
-			model->InsertMesh(ground);
-			InsertEntity("ground", model);
+			Model model;
+			_modelManager.GetModel("plan", model, Colors::LightSteelBlue);
+			model.GetMeshes().at(0)->Transform(
+				XMMatrixScaling(4.0f, 3.0f, 1.0f) * 
+				XMMatrixRotationY(XM_PIDIV2) * 
+				XMMatrixTranslation(-5.0f, 3.0f, 0.0f)
+			);
+			InsertEntity("wall-left", std::make_shared<Model>(model));
 		}
 
 		{
-			ModelPtr model(new Model());
-			_meshManager.Load("meshes/monkey.blend", "monkey");
-			MeshPtr monkey = std::make_shared<Mesh>(*_meshManager.GetMeshPtr("monkey"));
-			monkey->Transform(XMMatrixTranslation(-2.0f, 0.0f, 0.0f));
-			model->InsertMesh(monkey);
-			//InsertEntity("monkey", model);
+			Model model;
+			_modelManager.GetModel("plan", model, Colors::LightSteelBlue);
+			model.GetMeshes().at(0)->Transform(
+				XMMatrixScaling(4.0f, 3.0f, 1.0f) *
+				XMMatrixRotationY(-XM_PIDIV2) *
+				XMMatrixTranslation(5.0f, 3.0f, 0.0f)
+			);
+			InsertEntity("wall-right", std::make_shared<Model>(model));
 		}
+
+		{
+			Model model;
+			_modelManager.GetModel("plan", model, Colors::LightSteelBlue);
+			model.GetMeshes().at(0)->Transform(
+				XMMatrixScaling(5.0f, 4.0f, 1.0f) *
+				XMMatrixRotationX(-XM_PIDIV2) *
+				XMMatrixTranslation(0.0f, 0.0f, 0.0f)
+			);
+			InsertEntity("ground", std::make_shared<Model>(model));
+		}
+
+		{
+			Model model;
+			_modelManager.GetModel("plan", model, Colors::LightSteelBlue);
+			model.GetMeshes().at(0)->Transform(
+				XMMatrixScaling(5.0f, 4.0f, 1.0f) *
+				XMMatrixRotationX(XM_PIDIV2) *
+				XMMatrixTranslation(0.0f, 6.0f, 0.0f)
+			);
+			InsertEntity("roof", std::make_shared<Model>(model));
+		}
+		*/
 	}
 
 	void SceneManager::Draw()
@@ -94,6 +151,9 @@ namespace Fab
 
 	void SceneManager::Update(float deltaTime, float totalTime)
 	{
+		Model& model = dynamic_cast<Model&>(GetEntity("monkey"));
+		model.GetMeshes().at(0)->Transform(XMMatrixRotationY(deltaTime));
+
 		if (totalTime > 1.0f)
 			_camera.Update(deltaTime, totalTime);
 
@@ -114,5 +174,16 @@ namespace Fab
 	Camera&  SceneManager::GetCamera()
 	{
 		return _camera;
+	}
+
+	void SceneManager::UpdateAmbientColor()
+	{
+		FrameConstantBuffer* pFrameConstantBufferUpdate = _renderSystem.GetFrameConstantBufferUpdate();
+		ID3D11Buffer** pFrameConstantBuffer = _renderSystem.GetFrameConstantBuffer();
+		ID3D11DeviceContext** pContext = _renderSystem.GetPImmediateContext();
+
+		pFrameConstantBufferUpdate->AmbientColor = _ambientColor;
+		(*pContext)->UpdateSubresource(*pFrameConstantBuffer, 0, nullptr, pFrameConstantBufferUpdate, 0, 0);
+
 	}
 }

@@ -12,14 +12,14 @@ namespace Fab
 
 	struct MeshData
 	{
-		std::vector<VertexColor> Vertices;
-		std::vector<WORD>        Indices;
-		ID3D11Buffer*            PVertexBuffer;
-		ID3D11Buffer*            PIndexBuffer;
+		std::vector<VertexData>   Vertices;
+		std::vector<WORD>         Indices;
 
 		MeshData()
-			: PVertexBuffer(nullptr)
-			, PIndexBuffer(nullptr)
+		{
+		}
+
+		~MeshData()
 		{
 		}
 	};
@@ -33,16 +33,31 @@ namespace Fab
 		void        Initialise() override;
 		void        Draw() override;
 		void        Update(float deltaTime, float totalTime) override;
+		void        UpdateLocalPosition();
 		void        Transform(XMMATRIX matrix);
+		void        TransformLocal(XMMATRIX matrix);
+		void        TransformAround(XMMATRIX matrix, XMFLOAT3 around);
+		void        SetMeshData(MeshData& data);
 		MeshData&   GetMeshData();
-		XMFLOAT4X4& GetPosition();
+		XMFLOAT4X4& GetWorld();
 
 	public:
-		D3D11RenderSystem&      _renderSystem;
+		static const XMFLOAT4 DefaultSpecularColor;
+		static const float    DefaultSpecularPower;
 
-		MeshData                _meshData;
-		XMFLOAT4X4              _position;
-		ShaderPtr               _shader;
+	private:
+		D3D11RenderSystem& _renderSystem;
+
+		MeshData           _meshData;
+		XMFLOAT4X4         _world;
+		XMFLOAT3           _position;
+		ShaderPtr          _shader;
+
+		ID3D11Buffer*      _pVertexBuffer;
+		ID3D11Buffer*      _pIndexBuffer;
+
+		XMFLOAT4           _specularColor;
+		float              _specularPower;
 	};
 
 	typedef std::shared_ptr<Mesh> MeshPtr;

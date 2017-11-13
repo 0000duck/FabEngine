@@ -14,15 +14,15 @@ namespace Fab
 	void ShaderManager::Initialise()
 	{
 		{
-			ShaderPtr color(new Shader(L"shaders/color.fx"));
+			ShaderPtr color(new Shader(L"shaders/default.fx"));
 			color->Compile();
-			InsertShader("color", color);
+			InsertShader("default", std::move(color));
 		}
 	}
 
 	void ShaderManager::InsertShader(std::string name, ShaderPtr shader)
 	{
-		_shaders.insert(std::pair<std::string, ShaderPtr>(name, shader));
+		_shaders.insert(std::pair<std::string, ShaderPtr>(name, std::move(shader)));
 	}
 
 	Shader& ShaderManager::GetShader(std::string name)

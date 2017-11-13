@@ -10,6 +10,6 @@ namespace Fab
 	public:
 		MeshLoader();
 		~MeshLoader();
-		void Load(std::string fileName, Mesh& object);
+		void Load(aiMesh* aiMesh, MeshData& meshData);
 	};
 }

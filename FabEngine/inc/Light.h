@@ -9,9 +9,11 @@ namespace Fab
 	{
 	public:
 		Light();
-		~Light();
+		virtual ~Light() = 0;
 		void Initialise() override;
 		void Draw() override;
 		void Update(float deltaTime, float totalTime) override;
 	};
+
+	typedef std::shared_ptr<Light> LightPtr;
 }

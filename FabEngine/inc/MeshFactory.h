@@ -15,7 +15,7 @@ namespace Fab
 		~MeshFactory();
 		void CreateCube(MeshPtr& mesh, float width, float height, float depth);
 		void CreateSphere(MeshPtr& mesh, float radius, UINT sliceCount, UINT stackCount);
-		void CreatePlane(MeshPtr& mesh, float width, float height);
+		void CreatePlane(MeshPtr& mesh, float width, float height, XMFLOAT4 color);
 		void CreateTriangle(MeshPtr& mesh, float width, float height);
 
 	private:

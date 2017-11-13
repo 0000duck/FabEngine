@@ -8,7 +8,6 @@ namespace Fab
 	D3D11RenderSystem::D3D11RenderSystem(UINT windowWidth, UINT windowHeight)
 		: _windowHeight(windowHeight)
 		, _windowWidth(windowWidth)
-		
 	{
 		_driverType = D3D_DRIVER_TYPE_HARDWARE;
 		_featureLevel = D3D_FEATURE_LEVEL_11_0;
@@ -16,7 +15,8 @@ namespace Fab
 		_pImmediateContext = nullptr;
 		_pSwapChain = nullptr;
 		_pRenderTargetView = nullptr;
-		_pConstantBuffer = nullptr;
+		_pFrameConstantBuffer = nullptr;
+		_pObjectConstantBuffer = nullptr;
 
 		_pRenderSystem = static_cast<D3D11RenderSystem*>(this);
 	}
@@ -149,14 +149,29 @@ namespace Fab
 		// Set primitive topology
 		_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-		// Create the constant buffer
-		D3D11_BUFFER_DESC bd;
-		ZeroMemory(&bd, sizeof(bd));
-		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.ByteWidth = sizeof(ConstantBuffer);
-		bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		bd.CPUAccessFlags = 0;
-		hr = _pd3dDevice->CreateBuffer(&bd, nullptr, &_pConstantBuffer);
+		// Create constant buffers
+		D3D11_BUFFER_DESC bdFrame;
+		ZeroMemory(&bdFrame, sizeof(bdFrame));
+		bdFrame.Usage = D3D11_USAGE_DEFAULT;
+		bdFrame.ByteWidth = sizeof(FrameConstantBuffer);
+		bdFrame.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		bdFrame.CPUAccessFlags = 0;
+		hr = _pd3dDevice->CreateBuffer(&bdFrame, nullptr, &_pFrameConstantBuffer);
+
+		D3D11_BUFFER_DESC bdObject;
+		ZeroMemory(&bdObject, sizeof(bdObject));
+		bdObject.Usage = D3D11_USAGE_DEFAULT;
+		bdObject.ByteWidth = sizeof(ObjectConstantBuffer);
+		bdObject.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		bdObject.CPUAccessFlags = 0;
+		hr = _pd3dDevice->CreateBuffer(&bdObject, nullptr, &_pObjectConstantBuffer);
+
+		//Set constant buffers for vertex_shader and pixel_shader
+		_pImmediateContext->VSSetConstantBuffers(0, 1, &_pFrameConstantBuffer);
+		_pImmediateContext->VSSetConstantBuffers(1, 1, &_pObjectConstantBuffer);
+
+		_pImmediateContext->PSSetConstantBuffers(0, 1, &_pFrameConstantBuffer);
+		_pImmediateContext->PSSetConstantBuffers(1, 1, &_pObjectConstantBuffer);
 
 		return S_OK;
 	}
@@ -221,14 +236,13 @@ namespace Fab
 			_pImmediateContext->ClearState();
 
 		SafeReleaseCom(_pImmediateContext);
-		SafeReleaseCom(_pConstantBuffer);
+		SafeReleaseCom(_pFrameConstantBuffer);
+		SafeReleaseCom(_pObjectConstantBuffer);
 		SafeReleaseCom(_pRenderTargetView);
 		SafeReleaseCom(_pSwapChain);
 		SafeReleaseCom(_pd3dDevice);
 		SafeReleaseCom(_depthStencilView);
 		SafeReleaseCom(_depthStencilBuffer);
-
-		SafeRelease(_pConstantBuffer);
 	}
 
 	void D3D11RenderSystem::Draw()
@@ -236,7 +250,11 @@ namespace Fab
 		_pImmediateContext->ClearRenderTargetView(_pRenderTargetView, reinterpret_cast<const float*>(&Colors::LightSteelBlue));
 		_pImmediateContext->ClearDepthStencilView(_depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-		_pImmediateContext->VSSetConstantBuffers(0, 1, &_pConstantBuffer);
+		//Set Default Light information (to be removed)
+		_pFrameConstantBufferUpdate.LightColor = XMFLOAT4(1.0f, 1.0f, 0.9f, 0.7f);
+		_pFrameConstantBufferUpdate.LightDirection = XMFLOAT3(-1.25f, -1.5f, 2.5f);
+
+		_pImmediateContext->UpdateSubresource(_pFrameConstantBuffer, 0, nullptr, &_pFrameConstantBufferUpdate, 0, 0);
 	}
 
 	void D3D11RenderSystem::Swap()
@@ -254,14 +272,24 @@ namespace Fab
 		return &_pImmediateContext;
 	}
 
-	ID3D11Buffer** D3D11RenderSystem::GetConstantBuffer()
+	ID3D11Buffer** D3D11RenderSystem::GetFrameConstantBuffer()
 	{
-		return &_pConstantBuffer;
+		return &_pFrameConstantBuffer;
 	}
 
-	ConstantBuffer* D3D11RenderSystem::GetConstantBufferUpdate()
+	FrameConstantBuffer* D3D11RenderSystem::GetFrameConstantBufferUpdate()
 	{
-		return &_pConstantBufferUpdate;
+		return &_pFrameConstantBufferUpdate;
+	}
+
+	ID3D11Buffer** D3D11RenderSystem::GetObjectConstantBuffer()
+	{
+		return &_pObjectConstantBuffer;
+	}
+
+	ObjectConstantBuffer* D3D11RenderSystem::GetObjectConstantBufferUpdate()
+	{
+		return &_pObjectConstantBufferUpdate;
 	}
 
 	UINT D3D11RenderSystem::GetWindowHeight()

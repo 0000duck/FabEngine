@@ -148,7 +148,8 @@
     <ClCompile Include="src\LightFactory.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\MeshLoader.cpp" />
-    <ClCompile Include="src\MeshManager.cpp" />
+    <ClCompile Include="src\ModelLoader.cpp" />
+    <ClCompile Include="src\ModelManager.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -176,7 +177,8 @@
     <ClInclude Include="inc\Light.h" />
     <ClInclude Include="inc\LightFactory.h" />
     <ClInclude Include="inc\MeshLoader.h" />
-    <ClInclude Include="inc\MeshManager.h" />
+    <ClInclude Include="inc\ModelLoader.h" />
+    <ClInclude Include="inc\ModelManager.h" />
     <ClInclude Include="inc\Model.h" />
     <ClInclude Include="inc\Mouse.h" />
     <ClInclude Include="inc\Mesh.h" />
@@ -197,6 +199,16 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="bin\shaders\default.fx">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">vertex_shader</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">vertex_shader</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

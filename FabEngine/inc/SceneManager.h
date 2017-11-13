@@ -1,15 +1,12 @@
 #pragma once
 
 #include <DirectXComponentsPCH.h>
-#include "MeshManager.h"
+#include "ModelManager.h"
 #include "IEntity.h"
 #include "Camera.h"
 #include "Light.h"
 #include "Model.h"
 #include "Mesh.h"
-#include "IFactory.h"
-#include "LightFactory.h"
-#include "MeshFactory.h"
 
 namespace Fab
 {
@@ -26,11 +23,19 @@ namespace Fab
 		Camera&  GetCamera();
 
 	private:
+		void     UpdateAmbientColor();
+
+	public:
+		static const XMFLOAT4 DefaultAmbientColor;
+
+	private:
+		D3D11RenderSystem&                _renderSystem;
+		ModelManager                      _modelManager;
+
 		std::map<std::string, IEntityPtr> _entities;
-		MeshManager                       _meshManager;
+		std::map<std::string, IEntityPtr> _lights;
 		Camera                            _camera;
 
-		LightFactory                      _lightFactory;
-		MeshFactory                       _meshFactory;
+		XMFLOAT4                          _ambientColor;
 	};
 }

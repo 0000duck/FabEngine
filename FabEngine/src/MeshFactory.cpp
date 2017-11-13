@@ -14,7 +14,7 @@ namespace Fab
 
 	void MeshFactory::CreateCube(MeshPtr& mesh, float width, float height, float depth)
 	{
-		VertexColor vertices[24];
+		/*VertexData vertices[24];
 		WORD indices[36];
 
 		float w2 = 0.5f * width;
@@ -22,40 +22,40 @@ namespace Fab
 		float d2 = 0.5f * depth;
 
 		// Fill in the front face vertex data.
-		vertices[0] = VertexColor(XMFLOAT3(-w2, -h2, -d2), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
-		vertices[1] = VertexColor(XMFLOAT3(-w2, +h2, -d2), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
-		vertices[2] = VertexColor(XMFLOAT3(+w2, +h2, -d2), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
-		vertices[3] = VertexColor(XMFLOAT3(+w2, -h2, -d2), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
+		vertices[0] = VertexData(XMFLOAT3(-w2, -h2, -d2), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+		vertices[1] = VertexData(XMFLOAT3(-w2, +h2, -d2), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
+		vertices[2] = VertexData(XMFLOAT3(+w2, +h2, -d2), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
+		vertices[3] = VertexData(XMFLOAT3(+w2, -h2, -d2), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		// Fill in the back face vertex data.
-		vertices[4] = VertexColor(XMFLOAT3(-w2, -h2, +d2), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
-		vertices[5] = VertexColor(XMFLOAT3(+w2, -h2, +d2), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
-		vertices[6] = VertexColor(XMFLOAT3(+w2, +h2, +d2), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
-		vertices[7] = VertexColor(XMFLOAT3(-w2, +h2, +d2), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
+		vertices[4] = VertexData(XMFLOAT3(-w2, -h2, +d2), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+		vertices[5] = VertexData(XMFLOAT3(+w2, -h2, +d2), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
+		vertices[6] = VertexData(XMFLOAT3(+w2, +h2, +d2), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
+		vertices[7] = VertexData(XMFLOAT3(-w2, +h2, +d2), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		// Fill in the top face vertex data.
-		vertices[8]  = VertexColor(XMFLOAT3(-w2, +h2, -d2), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
-		vertices[9]  = VertexColor(XMFLOAT3(-w2, +h2, +d2), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
-		vertices[10] = VertexColor(XMFLOAT3(+w2, +h2, +d2), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
-		vertices[11] = VertexColor(XMFLOAT3(+w2, +h2, -d2), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
+		vertices[8]  = VertexData(XMFLOAT3(-w2, +h2, -d2), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+		vertices[9]  = VertexData(XMFLOAT3(-w2, +h2, +d2), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
+		vertices[10] = VertexData(XMFLOAT3(+w2, +h2, +d2), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
+		vertices[11] = VertexData(XMFLOAT3(+w2, +h2, -d2), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		// Fill in the bottom face vertex data.
-		vertices[12] = VertexColor(XMFLOAT3(-w2, -h2, -d2), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
-		vertices[13] = VertexColor(XMFLOAT3(+w2, -h2, -d2), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
-		vertices[14] = VertexColor(XMFLOAT3(+w2, -h2, +d2), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
-		vertices[15] = VertexColor(XMFLOAT3(-w2, -h2, +d2), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
+		vertices[12] = VertexData(XMFLOAT3(-w2, -h2, -d2), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+		vertices[13] = VertexData(XMFLOAT3(+w2, -h2, -d2), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
+		vertices[14] = VertexData(XMFLOAT3(+w2, -h2, +d2), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
+		vertices[15] = VertexData(XMFLOAT3(-w2, -h2, +d2), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		// Fill in the left face vertex data.
-		vertices[16] = VertexColor(XMFLOAT3(-w2, -h2, +d2), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
-		vertices[17] = VertexColor(XMFLOAT3(-w2, +h2, +d2), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
-		vertices[18] = VertexColor(XMFLOAT3(-w2, +h2, -d2), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
-		vertices[19] = VertexColor(XMFLOAT3(-w2, -h2, -d2), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
+		vertices[16] = VertexData(XMFLOAT3(-w2, -h2, +d2), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+		vertices[17] = VertexData(XMFLOAT3(-w2, +h2, +d2), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
+		vertices[18] = VertexData(XMFLOAT3(-w2, +h2, -d2), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
+		vertices[19] = VertexData(XMFLOAT3(-w2, -h2, -d2), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		// Fill in the right face vertex data.
-		vertices[20] = VertexColor(XMFLOAT3(+w2, -h2, -d2), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
-		vertices[21] = VertexColor(XMFLOAT3(+w2, +h2, -d2), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
-		vertices[22] = VertexColor(XMFLOAT3(+w2, +h2, +d2), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
-		vertices[23] = VertexColor(XMFLOAT3(+w2, -h2, +d2), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
+		vertices[20] = VertexData(XMFLOAT3(+w2, -h2, -d2), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+		vertices[21] = VertexData(XMFLOAT3(+w2, +h2, -d2), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
+		vertices[22] = VertexData(XMFLOAT3(+w2, +h2, +d2), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
+		vertices[23] = VertexData(XMFLOAT3(+w2, -h2, +d2), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		// Fill in the front face index data
 		indices[0] = 0; indices[1] = 1; indices[2] = 2;
@@ -86,14 +86,14 @@ namespace Fab
 		meshData.Vertices.insert(meshData.Vertices.end(), &vertices[0], &vertices[24]);
 		meshData.Indices.insert(meshData.Indices.end(), &indices[0], &indices[36]);
 
-		mesh->Build();
+		mesh->Build();*/
 	}
 
 	void MeshFactory::CreateSphere(MeshPtr& mesh, float radius, UINT sliceCount, UINT stackCount)
 	{
-		MeshData& meshData = mesh->GetMeshData();
-		VertexColor topVertex(XMFLOAT3(0.0f, +radius, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
-		VertexColor bottomVertex(XMFLOAT3(0.0f, -radius, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+		/*MeshData& meshData = mesh->GetMeshData();
+		VertexData topVertex(XMFLOAT3(0.0f, +radius, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+		VertexData bottomVertex(XMFLOAT3(0.0f, -radius, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
 
 		meshData.Vertices.push_back(topVertex);
 
@@ -110,7 +110,7 @@ namespace Fab
 			{
 				float theta = j*thetaStep;
 
-				VertexColor v;
+				VertexData v;
 
 				// spherical to cartesian
 				v.Position.x = radius*sinf(phi)*cosf(theta);
@@ -177,26 +177,31 @@ namespace Fab
 			meshData.Indices.push_back(baseIndex + i + 1);
 		}
 
-		mesh->Build();
+		mesh->Build();*/
 	}
 
-	void MeshFactory::CreatePlane(MeshPtr& mesh, float width, float height)
+	void MeshFactory::CreatePlane(MeshPtr& mesh, float width, float height, XMFLOAT4 color)
 	{
-		VertexColor vertices[4];
+		MeshData& meshData = mesh->GetMeshData();
+
+		VertexData vertices[4];
 		WORD indices[6];
 
 		float w2 = 0.5f * width;
 		float h2 = 0.5f * height;
 
-		vertices[0] = VertexColor(XMFLOAT3(-w2, h2, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
-		vertices[1] = VertexColor(XMFLOAT3(w2, h2, 0.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
-		vertices[2] = VertexColor(XMFLOAT3(-w2, -h2, 0.0f), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
-		vertices[3] = VertexColor(XMFLOAT3(w2, -h2, 0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
+		vertices[0] = VertexData(XMFLOAT3(-w2, h2, 0.0f), color);
+		vertices[1] = VertexData(XMFLOAT3(w2, h2, 0.0f), color);
+		vertices[2] = VertexData(XMFLOAT3(-w2, -h2, 0.0f), color);
+		vertices[3] = VertexData(XMFLOAT3(w2, -h2, 0.0f), color);
+
+		vertices[0].Normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+		vertices[1].Normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+		vertices[2].Normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+		vertices[3].Normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
 
 		indices[0] = 0; indices[1] = 1; indices[2] = 2;
 		indices[3] = 2; indices[4] = 1; indices[5] = 3;
-
-		MeshData& meshData = mesh->GetMeshData();
 
 		meshData.Vertices.insert(meshData.Vertices.end(), &vertices[0], &vertices[4]);
 		meshData.Indices.insert(meshData.Indices.end(), &indices[0], &indices[6]);
@@ -206,15 +211,19 @@ namespace Fab
 
 	void MeshFactory::CreateTriangle(MeshPtr& mesh, float width, float height)
 	{
-		VertexColor vertices[3];
+		/*VertexData vertices[3];
 		WORD indices[3];
 
 		float w2 = 0.5f * width;
 		float h2 = 0.5f * height;
 
-		vertices[0] = VertexColor(XMFLOAT3(-w2, h2, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
-		vertices[1] = VertexColor(XMFLOAT3(w2, h2, 0.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
-		vertices[2] = VertexColor(XMFLOAT3(-w2, -h2, 0.0f), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
+		vertices[0] = VertexData(XMFLOAT3(-w2, h2, 0.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+		vertices[1] = VertexData(XMFLOAT3(w2, h2, 0.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
+		vertices[2] = VertexData(XMFLOAT3(-w2, -h2, 0.0f), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f));
+
+		vertices[0].Normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+		vertices[1].Normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+		vertices[2].Normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
 
 		indices[0] = 0; indices[1] = 1; indices[2] = 2;
 
@@ -223,6 +232,6 @@ namespace Fab
 		meshData.Vertices.insert(meshData.Vertices.end(), &vertices[0], &vertices[3]);
 		meshData.Indices.insert(meshData.Indices.end(), &indices[0], &indices[3]);
 
-		mesh->Build();
+		mesh->Build();*/
 	}
 }

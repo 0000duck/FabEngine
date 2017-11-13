@@ -7,31 +7,43 @@ using namespace DirectX;
 
 namespace Fab
 {
-	struct VertexColor
+	struct VertexData
 	{
 		XMFLOAT3 Position;
 		XMFLOAT4 Color;
 		XMFLOAT3 Normal;
-		XMFLOAT3 Tangent;
-		XMFLOAT3 BiNormal;
+		//XMFLOAT3 Tangent;
+		//XMFLOAT3 BiNormal;
 
-		VertexColor()
+		VertexData()
 		{
 		}
 
-		VertexColor(XMFLOAT3 position, XMFLOAT4 color)
+		VertexData(XMFLOAT3 position, XMFLOAT4 color)
 			: Position(position)
 			, Color(color)
+			, Normal(position)
+			//, Tangent(position)
+			//, BiNormal(position)
 		{
 		}
 
-		VertexColor(XMFLOAT3 position, XMFLOAT4 color, XMFLOAT3 normal, XMFLOAT3 tangent, XMFLOAT3 biNormal)
+		/*VertexData(XMFLOAT3 position, XMFLOAT4 color, XMFLOAT3 normal)
+			: Position(position)
+			, Color(color)
+			, Normal(normal)
+			, Tangent(position)
+			, BiNormal(position)
+		{
+		}
+
+		VertexData(XMFLOAT3 position, XMFLOAT4 color, XMFLOAT3 normal, XMFLOAT3 tangent, XMFLOAT3 biNormal)
 			: Position(position)
 			, Color(color)
 			, Normal(normal)
 			, Tangent(tangent)
 			, BiNormal(biNormal)
 		{
-		}
+		}*/
 	};
 }

@@ -6,7 +6,7 @@ namespace Fab
 	const float Camera::DefaultFov              = XM_PIDIV4;
 	const float Camera::DefaultNearZ            = 0.01f;
 	const float Camera::DefaultFarZ             = 100.0f;
-	const float Camera::DefaultTranslationSpeed = 2.0f;
+	const float Camera::DefaultTranslationSpeed = 4.0f;
 	const float Camera::DefaultRotationSpeed    = 0.4f;
 	const CameraMode Camera::DefaultMode        = CameraMode::FLY;
 
@@ -43,10 +43,10 @@ namespace Fab
 	void Camera::Initialise()
 	{
 		_right = XMFLOAT3(1.0f, 0.0f, 0.0f);
-		_look = XMFLOAT3(0.0f, -0.4f, 1.0f);
+		_look = XMFLOAT3(0.0f, -0.45f, 1.5f);
 		_up = XMFLOAT3(0.0f, 1.0f, 0.0f);
 
-		_position = XMFLOAT3(-3.0f, 1.5f, -7.0f);
+		_position = XMFLOAT3(0.0f, 2.0f, -6.0f);
 		_oldPosition = _position;
 
 		_lastAngle = 0;
@@ -56,13 +56,18 @@ namespace Fab
 
 	void Camera::Draw()
 	{
-		ConstantBuffer* pConstantBufferUpdate = _renderSystem.GetConstantBufferUpdate();
+		FrameConstantBuffer* pFrameConstantBufferUpdate = _renderSystem.GetFrameConstantBufferUpdate();
+		ID3D11Buffer** pFrameConstantBuffer             = _renderSystem.GetFrameConstantBuffer();
+		ID3D11DeviceContext** pContext                  = _renderSystem.GetPImmediateContext();
 
-		XMMATRIX view = XMLoadFloat4x4(&_view);
+		XMMATRIX view       = XMLoadFloat4x4(&_view);
 		XMMATRIX projection = XMLoadFloat4x4(&_projection);
 
-		pConstantBufferUpdate->_view = XMMatrixTranspose(view);
-		pConstantBufferUpdate->_projection = XMMatrixTranspose(projection);
+		pFrameConstantBufferUpdate->View           = XMMatrixTranspose(view);
+		pFrameConstantBufferUpdate->Projection     = XMMatrixTranspose(projection);
+		pFrameConstantBufferUpdate->CameraPosition = _position;
+
+		(*pContext)->UpdateSubresource(*pFrameConstantBuffer, 0, nullptr, pFrameConstantBufferUpdate, 0, 0);
 	}
 
 	void Camera::Update(float deltaTime, float totalTime)

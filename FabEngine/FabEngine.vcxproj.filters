@@ -150,12 +150,6 @@
     <ClCompile Include="src\ShaderManager.cpp">
       <Filter>Fichiers sources\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\MeshManager.cpp">
-      <Filter>Fichiers sources\Core\Scene\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MeshLoader.cpp">
-      <Filter>Fichiers sources\Core\Scene\Model</Filter>
-    </ClCompile>
     <ClCompile Include="src\Light.cpp">
       <Filter>Fichiers sources\Core\Scene\Light</Filter>
     </ClCompile>
@@ -166,6 +160,15 @@
       <Filter>Fichiers sources\Core\Factory</Filter>
     </ClCompile>
     <ClCompile Include="src\Model.cpp">
+      <Filter>Fichiers sources\Core\Scene\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ModelLoader.cpp">
+      <Filter>Fichiers sources\Core\Scene\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ModelManager.cpp">
+      <Filter>Fichiers sources\Core\Scene\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader.cpp">
       <Filter>Fichiers sources\Core\Scene\Model</Filter>
     </ClCompile>
   </ItemGroup>
@@ -230,12 +233,6 @@
     <ClInclude Include="inc\ShaderManager.h">
       <Filter>Fichiers d%27en-tête\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\MeshManager.h">
-      <Filter>Fichiers d%27en-tête\Core\Scene\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\MeshLoader.h">
-      <Filter>Fichiers d%27en-tête\Core\Scene\Model</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Light.h">
       <Filter>Fichiers d%27en-tête\Core\Scene\Light</Filter>
     </ClInclude>
@@ -248,6 +245,15 @@
     <ClInclude Include="inc\MeshFactory.h">
       <Filter>Fichiers d%27en-tête\Core\Factory</Filter>
     </ClInclude>
+    <ClInclude Include="inc\ModelManager.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ModelLoader.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\MeshLoader.h">
+      <Filter>Fichiers d%27en-tête\Core\Scene\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FabEngine.rc">
@@ -258,5 +264,8 @@
     <Image Include="directx.ico">
       <Filter>Fichiers de ressources</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="bin\shaders\default.fx" />
   </ItemGroup>
 </Project>

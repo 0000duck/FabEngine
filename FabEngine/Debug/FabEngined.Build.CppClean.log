@@ -2,12 +2,12 @@ c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengined.pch
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\vc141.pdb
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\vc141.idb
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\directxcomponentspch.obj
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\keyboard.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\light.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\lightfactory.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\main.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\meshloader.obj
-c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\meshmanager.obj
+c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\modelloader.obj
+c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\modelmanager.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\model.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\mouse.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\mesh.obj
@@ -28,6 +28,8 @@ c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\d3d11rendersystem
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\icomponent.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\ientity.obj
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\ifactory.obj
+c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\keyboard.obj
+c:\users\fabien\documents\staffs-uni\fabengine\fabengine\bin\default.cso
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\bin\fabengined.ilk
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\bin\fabengined.exe
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\bin\fabengined.pdb
@@ -35,6 +37,10 @@ c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.res
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\cl.command.1.tlog
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\cl.read.1.tlog
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\cl.write.1.tlog
+c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\fabengine.write.1u.tlog
+c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\fxc.command.1.tlog
+c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\fxc.read.1.tlog
+c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\fxc.write.1.tlog
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\link.command.1.tlog
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\link.read.1.tlog
 c:\users\fabien\documents\staffs-uni\fabengine\fabengine\debug\fabengine.tlog\link.write.1.tlog

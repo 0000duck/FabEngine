@@ -20,10 +20,6 @@ namespace Fab
 		std::vector<MeshPtr>& GetMeshes();
 
 	private:
-		Model(const Model& model) = delete;
-		Model& operator=(const Model& model) = delete;
-
-	private:
 		std::vector<MeshPtr> _meshes;
 	};
 
