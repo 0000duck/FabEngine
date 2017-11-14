@@ -23,7 +23,7 @@ namespace Fab
 		static const float DefaultRadius;
 
 	protected:
-		XMFLOAT3 _position;
-		float    _radius;
+		XMFLOAT3   _position;
+		float      _radius;
 	};
 }

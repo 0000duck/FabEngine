@@ -70,13 +70,13 @@ namespace Fab
 	void Mesh::Draw()
 	{
 		ID3D11DeviceContext** pContext                    = _renderSystem.GetPImmediateContext();
-		ID3D11Buffer** pObjectConstantBuffer              = _renderSystem.GetObjectConstantBuffer();
-		ObjectConstantBuffer* pObjectConstantBufferUpdate = _renderSystem.GetObjectConstantBufferUpdate();
+		ID3D11Buffer** pFrameConstantBuffer              = _renderSystem.GetFrameConstantBuffer();
+		FrameConstantBuffer* pFrameConstantBufferUpdate = _renderSystem.GetFrameConstantBufferUpdate();
 
 		XMMATRIX world = XMLoadFloat4x4(&_world);
-		pObjectConstantBufferUpdate->World = XMMatrixTranspose(world);
-		pObjectConstantBufferUpdate->SpecularColor = _specularColor;
-		pObjectConstantBufferUpdate->SpecularPower = _specularPower;
+		pFrameConstantBufferUpdate->World = XMMatrixTranspose(world);
+		pFrameConstantBufferUpdate->SpecularColor = _specularColor;
+		pFrameConstantBufferUpdate->SpecularPower = XMFLOAT4(_specularPower, 0.0f, 0.0f, 0.0f);
 
 		_shader->Use();
 
@@ -85,7 +85,7 @@ namespace Fab
 		(*pContext)->IASetVertexBuffers(0, 1, &_pVertexBuffer, &stride, &offset);
 		(*pContext)->IASetIndexBuffer(_pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
 	
-		(*pContext)->UpdateSubresource(*pObjectConstantBuffer, 0, nullptr, pObjectConstantBufferUpdate, 0, 0);
+		(*pContext)->UpdateSubresource(*pFrameConstantBuffer, 0, nullptr, pFrameConstantBufferUpdate, 0, 0);
 		(*pContext)->DrawIndexed(_meshData.Indices.size(), 0, 0);
 	}
 
@@ -143,6 +143,16 @@ namespace Fab
 	void Mesh::SetMeshData(MeshData& meshData)
 	{
 		_meshData = meshData;
+	}
+
+	void Mesh::SetSpecularColor(XMFLOAT4 specularColor)
+	{
+		_specularColor = specularColor;
+	}
+
+	void Mesh::SetSpecularPower(float specularPower)
+	{
+		_specularPower = specularPower;
 	}
 
 	MeshData& Mesh::GetMeshData()

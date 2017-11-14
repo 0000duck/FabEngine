@@ -166,6 +166,7 @@
     <ClCompile Include="src\SpotLight.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\tinyxml2.cpp" />
+    <ClCompile Include="src\VectorHelper.cpp" />
     <ClCompile Include="src\Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +199,7 @@
     <ClInclude Include="inc\SpotLight.h" />
     <ClInclude Include="inc\Timer.h" />
     <ClInclude Include="inc\tinyxml2.h" />
+    <ClInclude Include="inc\VectorHelper.h" />
     <ClInclude Include="inc\Vertex.h" />
   </ItemGroup>
   <ItemGroup>

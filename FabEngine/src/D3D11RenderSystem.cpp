@@ -16,7 +16,6 @@ namespace Fab
 		_pSwapChain = nullptr;
 		_pRenderTargetView = nullptr;
 		_pFrameConstantBuffer = nullptr;
-		_pObjectConstantBuffer = nullptr;
 
 		_pRenderSystem = static_cast<D3D11RenderSystem*>(this);
 	}
@@ -158,20 +157,9 @@ namespace Fab
 		bdFrame.CPUAccessFlags = 0;
 		hr = _pd3dDevice->CreateBuffer(&bdFrame, nullptr, &_pFrameConstantBuffer);
 
-		D3D11_BUFFER_DESC bdObject;
-		ZeroMemory(&bdObject, sizeof(bdObject));
-		bdObject.Usage = D3D11_USAGE_DEFAULT;
-		bdObject.ByteWidth = sizeof(ObjectConstantBuffer);
-		bdObject.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		bdObject.CPUAccessFlags = 0;
-		hr = _pd3dDevice->CreateBuffer(&bdObject, nullptr, &_pObjectConstantBuffer);
-
 		//Set constant buffers for vertex_shader and pixel_shader
 		_pImmediateContext->VSSetConstantBuffers(0, 1, &_pFrameConstantBuffer);
-		_pImmediateContext->VSSetConstantBuffers(1, 1, &_pObjectConstantBuffer);
-
 		_pImmediateContext->PSSetConstantBuffers(0, 1, &_pFrameConstantBuffer);
-		_pImmediateContext->PSSetConstantBuffers(1, 1, &_pObjectConstantBuffer);
 
 		return S_OK;
 	}
@@ -237,7 +225,6 @@ namespace Fab
 
 		SafeReleaseCom(_pImmediateContext);
 		SafeReleaseCom(_pFrameConstantBuffer);
-		SafeReleaseCom(_pObjectConstantBuffer);
 		SafeReleaseCom(_pRenderTargetView);
 		SafeReleaseCom(_pSwapChain);
 		SafeReleaseCom(_pd3dDevice);
@@ -250,10 +237,7 @@ namespace Fab
 		_pImmediateContext->ClearRenderTargetView(_pRenderTargetView, reinterpret_cast<const float*>(&Colors::LightSteelBlue));
 		_pImmediateContext->ClearDepthStencilView(_depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-		//Set Default Light information (to be removed)
-		_pFrameConstantBufferUpdate.LightColor = XMFLOAT4(1.0f, 1.0f, 0.9f, 0.7f);
-		_pFrameConstantBufferUpdate.LightDirection = XMFLOAT3(-1.25f, -1.5f, 2.5f);
-
+		_pFrameConstantBufferUpdate.LightType = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 		_pImmediateContext->UpdateSubresource(_pFrameConstantBuffer, 0, nullptr, &_pFrameConstantBufferUpdate, 0, 0);
 	}
 
@@ -280,16 +264,6 @@ namespace Fab
 	FrameConstantBuffer* D3D11RenderSystem::GetFrameConstantBufferUpdate()
 	{
 		return &_pFrameConstantBufferUpdate;
-	}
-
-	ID3D11Buffer** D3D11RenderSystem::GetObjectConstantBuffer()
-	{
-		return &_pObjectConstantBuffer;
-	}
-
-	ObjectConstantBuffer* D3D11RenderSystem::GetObjectConstantBufferUpdate()
-	{
-		return &_pObjectConstantBufferUpdate;
 	}
 
 	UINT D3D11RenderSystem::GetWindowHeight()

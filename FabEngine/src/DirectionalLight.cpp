@@ -1,13 +1,14 @@
 #include <DirectXComponentsPCH.h>
 #include "DirectionalLight.h"
+#include "VectorHelper.h"
 
 namespace Fab
 {
 	DirectionalLight::DirectionalLight()
 		: Light(LightType::DIRECTIONAL)
-		, _right(XMFLOAT3(1.0f, 0.0f, 0.0f))
-		, _direction(XMFLOAT3(0.0f, -0.5f, 1.5f))
-		, _up(XMFLOAT3(0.0f, 1.0f, 0.0f))
+		, _right(Vector3Helper::Right)
+		, _direction(Vector3Helper::Backward)
+		, _up(Vector3Helper::Up)
 	{
 	}
 
@@ -21,6 +22,14 @@ namespace Fab
 
 	void DirectionalLight::Draw()
 	{
+		FrameConstantBuffer* pFrameConstantBufferUpdate = _renderSystem.GetFrameConstantBufferUpdate();
+		ID3D11Buffer** pFrameConstantBuffer             = _renderSystem.GetFrameConstantBuffer();
+		ID3D11DeviceContext** pContext                  = _renderSystem.GetPImmediateContext();
+
+		pFrameConstantBufferUpdate->DirectionalColor     = _color;
+		pFrameConstantBufferUpdate->DirectionalDirection = XMFLOAT4(_direction.x, _direction.y, _direction.z, 1.0f);
+
+		(*pContext)->UpdateSubresource(*pFrameConstantBuffer, 0, nullptr, &pFrameConstantBufferUpdate, 0, 0);
 	}
 
 	void DirectionalLight::Update(float deltaTime, float totalTime)

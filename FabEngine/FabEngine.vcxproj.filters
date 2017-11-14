@@ -180,6 +180,9 @@
     <ClCompile Include="src\SpotLight.cpp">
       <Filter>Fichiers sources\Core\Scene\Light</Filter>
     </ClCompile>
+    <ClCompile Include="src\VectorHelper.cpp">
+      <Filter>Fichiers d%27en-tête\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Timer.h">
@@ -271,6 +274,9 @@
     </ClInclude>
     <ClInclude Include="inc\SpotLight.h">
       <Filter>Fichiers d%27en-tête\Core\Scene\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\VectorHelper.h">
+      <Filter>Fichiers sources\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

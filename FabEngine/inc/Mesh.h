@@ -40,6 +40,8 @@ namespace Fab
 		void        TransformLocal(XMMATRIX matrix);
 		void        TransformAround(XMMATRIX matrix, XMFLOAT3 around);
 		void        SetMeshData(MeshData& data);
+		void	    SetSpecularColor(XMFLOAT4 specularColor);
+		void        SetSpecularPower(float specularPower);
 		MeshData&   GetMeshData();
 		XMFLOAT4X4& GetWorld();
 

@@ -23,6 +23,8 @@ namespace Fab
 		static const XMFLOAT4 DefaultColor;
 
 	protected:
+		D3D11RenderSystem& _renderSystem;
+
 		XMFLOAT4  _color;
 		LightType _type;
 	};

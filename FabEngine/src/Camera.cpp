@@ -66,7 +66,7 @@ namespace Fab
 
 		pFrameConstantBufferUpdate->View           = XMMatrixTranspose(view);
 		pFrameConstantBufferUpdate->Projection     = XMMatrixTranspose(projection);
-		pFrameConstantBufferUpdate->CameraPosition = _position;
+		pFrameConstantBufferUpdate->CameraPosition = XMFLOAT4(_position.x, _position.y, _position.z, 0.0f);
 
 		(*pContext)->UpdateSubresource(*pFrameConstantBuffer, 0, nullptr, pFrameConstantBufferUpdate, 0, 0);
 	}
@@ -91,12 +91,12 @@ namespace Fab
 			float angleX = mouse.GetDistanceY() * _rotationSpeed * deltaTime * G_PI / 180.0f;
 			Rotate(angleX, angleY);
 
-			if (keyboard.IsKeyPressed(KeyName::Z) || keyboard.IsKeyPressed(KeyName::ARROW_UP))
+			if (keyboard.IsKeyPressed(KeyName::Z))
 			{
 				Fly(_translationSpeed * deltaTime);
 			}
 
-			if (keyboard.IsKeyPressed(KeyName::S) || keyboard.IsKeyPressed(KeyName::ARROW_DOWN))
+			if (keyboard.IsKeyPressed(KeyName::S))
 			{
 				Fly(-_translationSpeed * deltaTime);
 			}
@@ -110,24 +110,24 @@ namespace Fab
 			RotateY(angleY);
 			_lastAngle = angleY;
 
-			if (keyboard.IsKeyPressed(KeyName::Z) || keyboard.IsKeyPressed(KeyName::ARROW_UP))
+			if (keyboard.IsKeyPressed(KeyName::Z))
 			{
 				Walk(_translationSpeed * deltaTime);
 			}
 
-			if (keyboard.IsKeyPressed(KeyName::S) || keyboard.IsKeyPressed(KeyName::ARROW_DOWN))
+			if (keyboard.IsKeyPressed(KeyName::S))
 			{
 				Walk(-_translationSpeed * deltaTime);
 			}
 		}break;
 		}
 
-		if (keyboard.IsKeyPressed(KeyName::Q) || keyboard.IsKeyPressed(KeyName::ARROW_LEFT))
+		if (keyboard.IsKeyPressed(KeyName::Q))
 		{
 			Move(-_translationSpeed * deltaTime, 0.0f, 0.0f);
 		}
 
-		if (keyboard.IsKeyPressed(KeyName::D) || keyboard.IsKeyPressed(KeyName::ARROW_RIGHT))
+		if (keyboard.IsKeyPressed(KeyName::D))
 		{
 			Move(_translationSpeed * deltaTime, 0.0f, 0.0f);
 		}

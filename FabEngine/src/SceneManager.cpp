@@ -3,7 +3,7 @@
 
 namespace Fab
 {
-	const XMFLOAT4 SceneManager::DefaultAmbientColor = XMFLOAT4(1.0f, 1.0f, 1.0f, 0.4f);
+	const XMFLOAT4 SceneManager::DefaultAmbientColor = XMFLOAT4(1.0f, 1.0f, 1.0f, 0.3f);
 
 	SceneManager::SceneManager()
 		: _ambientColor(DefaultAmbientColor)
@@ -15,9 +15,14 @@ namespace Fab
 	{
 	}
 
-	void SceneManager::InsertEntity(std::string name, IEntityPtr entity)
+	void SceneManager::InsertModel(std::string name, ModelPtr model)
 	{
-		_entities.insert(std::pair<std::string, IEntityPtr>(name, std::move(entity)));
+		_models.insert(std::pair<std::string, ModelPtr>(name, std::move(model)));
+	}
+
+	void SceneManager::InsertLight(std::string name, LightPtr light)
+	{
+		_lights.insert(std::pair<std::string, LightPtr>(name, std::move(light)));
 	}
 
 	void SceneManager::Initialise()
@@ -25,6 +30,7 @@ namespace Fab
 		UpdateAmbientColor();
 
 		_modelManager.Load("models/monkey-big.blend", "monkey");
+		//_modelManager.Load("models/landscape-small.blend", "landscape");
 
 		{
 			Model model;
@@ -35,7 +41,22 @@ namespace Fab
 				XMMatrixScaling(2.0f, 2.0f, 2.0f) *
 				XMMatrixTranslation(0.0f, 0.0f, 0.0f)
 			);
-			InsertEntity("monkey", std::make_shared<Model>(model));
+			InsertModel("monkey", std::make_shared<Model>(model));
+		}
+
+		{
+			DirectionalLight light;
+			light.SetColor(XMFLOAT4(1.0f, 1.0f, 0.9f, 0.3f));
+			light.ApplyRotation(XMMatrixRotationY(XM_PIDIV4));
+			InsertLight("diffuse", std::make_shared<DirectionalLight>(light));
+		}
+
+		{
+			PointLight light;
+			light.SetColor(XMFLOAT4(1.0f, 1.0f, 1.0f, 0.3f));
+			light.SetPosition(XMFLOAT3(3.0f, 1.0f, -5.0f));
+			light.SetRadius(16.0f);
+			InsertLight("point", std::make_shared<PointLight>(light));
 		}
 
 		/*{
@@ -43,9 +64,9 @@ namespace Fab
 			_modelManager.GetModel("landscape", model, Colors::Silver);
 			model.GetMeshes().at(0)->Transform(
 				XMMatrixRotationX(-XM_PIDIV2) *
-				XMMatrixScaling(1.0f, 1.0f, 1.0f)
+				XMMatrixScaling(16.0f, 16.0f, 16.0f)
 			);
-			InsertEntity("landscape", std::make_shared<Model>(model));
+			InsertModel("landscape", std::make_shared<Model>(model));
 		}*/
 
 		/*
@@ -139,7 +160,12 @@ namespace Fab
 	{
 		_camera.Draw();
 
-		for (auto& entity : _entities)
+		for (auto& light : _lights)
+		{
+			light.second->Draw();
+		}
+
+		for (auto& entity : _models)
 		{
 			entity.second->Draw();
 		}
@@ -147,22 +173,37 @@ namespace Fab
 
 	void SceneManager::Update(float deltaTime, float totalTime)
 	{
-		Model& model = dynamic_cast<Model&>(GetEntity("monkey"));
-		model.GetMeshes().at(0)->Transform(XMMatrixRotationY(deltaTime));
+		Model& model = dynamic_cast<Model&>(GetModel("monkey"));
+		//model.GetMeshes().at(0)->Transform(XMMatrixRotationY(deltaTime));
+
+		//PointLight& light = dynamic_cast<PointLight&>(GetLight("point"));
 
 		if (totalTime > 1.0f)
 			_camera.Update(deltaTime, totalTime);
 
-		for (auto& entity : _entities)
+		for (auto& light : _lights)
+		{
+			light.second->Update(deltaTime, totalTime);
+		}
+
+		for (auto& entity : _models)
 		{
 			entity.second->Update(deltaTime, totalTime);
 		}
 	}
 
-	IEntity& SceneManager::GetEntity(std::string name)
+	Model& SceneManager::GetModel(std::string name)
 	{
-		auto found = _entities.find(name);
-		assert(found != _entities.end());
+		auto found = _models.find(name);
+		assert(found != _models.end());
+
+		return *found->second;
+	}
+
+	Light& SceneManager::GetLight(std::string name)
+	{
+		auto found = _lights.find(name);
+		assert(found != _lights.end());
 
 		return *found->second;
 	}

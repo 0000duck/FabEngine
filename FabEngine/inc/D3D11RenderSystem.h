@@ -11,24 +11,32 @@ namespace Fab
 {
 	class Application;
 
-	struct ObjectConstantBuffer
-	{
-		XMMATRIX World;
-
-		XMFLOAT4 SpecularColor;
-		float    SpecularPower;
-	};
-
 	struct FrameConstantBuffer
 	{
 		XMMATRIX View;
 		XMMATRIX Projection;
-
 		XMFLOAT4 AmbientColor;
-		XMFLOAT4 LightColor;
-		XMFLOAT3 LightDirection;
+		XMFLOAT4 Padding;
+		XMFLOAT4 CameraPosition; //float3
 
-		XMFLOAT3 CameraPosition;
+		XMMATRIX World;
+
+		XMFLOAT4 SpecularColor;
+		XMFLOAT4 SpecularPower;   //float
+
+		XMFLOAT4 DirectionalColor;
+		XMFLOAT4 DirectionalDirection; //float3
+
+		XMFLOAT4 LightColor;
+		XMFLOAT4 LightDirection;  //float3
+
+		XMFLOAT4 LightRadius;     //float
+		XMFLOAT4 LightPosition;   //float3
+
+		XMFLOAT4 LightInnerAngle; //float3
+		XMFLOAT4 LightOuterAngle; //float3
+
+		XMFLOAT4 LightType;       //int
 	};
 
 	class D3D11RenderSystem
@@ -50,8 +58,6 @@ namespace Fab
 		ID3D11DeviceContext**     GetPImmediateContext();
 		ID3D11Buffer**            GetFrameConstantBuffer();
 		FrameConstantBuffer*      GetFrameConstantBufferUpdate();
-		ID3D11Buffer**            GetObjectConstantBuffer();
-		ObjectConstantBuffer*     GetObjectConstantBufferUpdate();
 		UINT                      GetWindowHeight();
 		UINT                      GetWindowWidth();
 
@@ -73,13 +79,11 @@ namespace Fab
 		IDXGISwapChain*           _pSwapChain;
 		ID3D11RenderTargetView*   _pRenderTargetView;
 		ID3D11Buffer*             _pFrameConstantBuffer;
-		ID3D11Buffer*             _pObjectConstantBuffer;
 		D3D11_VIEWPORT            _screenViewport;
 		ID3D11DepthStencilView*   _depthStencilView;
 		ID3D11Texture2D*          _depthStencilBuffer;
 
 		FrameConstantBuffer       _pFrameConstantBufferUpdate;
-		ObjectConstantBuffer      _pObjectConstantBufferUpdate;
 
 		UINT                      _windowHeight;
 		UINT                      _windowWidth;
