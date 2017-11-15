@@ -10,6 +10,7 @@ namespace Fab
 		: _renderSystem(D3D11RenderSystem::GetRenderSystem())
 		, _specularColor(DefaultSpecularColor)
 		, _specularPower(DefaultSpecularPower)
+		, _texture(nullptr)
 	{
 		XMStoreFloat4x4(&_world, XMMatrixIdentity());
 		UpdateLocalPosition();
@@ -80,6 +81,16 @@ namespace Fab
 
 		_shader->Use();
 
+		if (_texture != nullptr)
+		{
+			_texture->Use();
+			pFrameConstantBufferUpdate->HasMaterial = XMFLOAT4(1.0f, 0.0f, 0.0f, 0.0f);
+		}
+		else
+		{
+			pFrameConstantBufferUpdate->HasMaterial = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
+		}
+
 		UINT stride = sizeof(VertexData);
 		UINT offset = 0;
 		(*pContext)->IASetVertexBuffers(0, 1, &_pVertexBuffer, &stride, &offset);
@@ -103,7 +114,7 @@ namespace Fab
 
 	void Mesh::Transform(XMMATRIX matrix)
 	{
-		XMStoreFloat4x4(&_world, XMLoadFloat4x4(&_world)*matrix);
+		XMStoreFloat4x4(&_world, XMLoadFloat4x4(&_world) * matrix);
 		UpdateLocalPosition();
 	}
 
@@ -155,6 +166,11 @@ namespace Fab
 		_specularPower = specularPower;
 	}
 
+	void Mesh::SetTexture(TexturePtr texture)
+	{
+		_texture = texture;
+	}
+
 	MeshData& Mesh::GetMeshData()
 	{
 		return _meshData;
@@ -163,5 +179,10 @@ namespace Fab
 	XMFLOAT4X4& Mesh::GetWorld()
 	{
 		return _world;
+	}
+
+	XMFLOAT3& Mesh::GetPosition()
+	{
+		return _position;
 	}
 }

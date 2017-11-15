@@ -2,12 +2,12 @@
 
 #include <DirectXComponentsPCH.h>
 #include "ModelManager.h"
+#include "TextureManager.h"
 #include "IEntity.h"
 #include "Camera.h"
 #include "Light.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
-#include "SpotLight.h"
 #include "Model.h"
 #include "Mesh.h"
 
@@ -36,6 +36,7 @@ namespace Fab
 	private:
 		D3D11RenderSystem&              _renderSystem;
 		ModelManager                    _modelManager;
+		TextureManager                  _textureManager;
 
 		std::map<std::string, ModelPtr> _models;
 		std::map<std::string, LightPtr> _lights;

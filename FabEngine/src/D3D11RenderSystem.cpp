@@ -9,15 +9,23 @@ namespace Fab
 		: _windowHeight(windowHeight)
 		, _windowWidth(windowWidth)
 	{
-		_driverType = D3D_DRIVER_TYPE_HARDWARE;
-		_featureLevel = D3D_FEATURE_LEVEL_11_0;
-		_pd3dDevice = nullptr;
-		_pImmediateContext = nullptr;
-		_pSwapChain = nullptr;
-		_pRenderTargetView = nullptr;
+		_driverType           = D3D_DRIVER_TYPE_HARDWARE;
+		_featureLevel         = D3D_FEATURE_LEVEL_11_0;
+		_pd3dDevice           = nullptr;
+		_pImmediateContext    = nullptr;
+		_pSwapChain           = nullptr;
+		_pRenderTargetView    = nullptr;
 		_pFrameConstantBuffer = nullptr;
 
-		_pRenderSystem = static_cast<D3D11RenderSystem*>(this);
+		_pColorSampler        = nullptr;
+
+		_pRenderSystem        = static_cast<D3D11RenderSystem*>(this);
+
+		tinyxml2::XMLDocument doc;
+		doc.LoadFile("data/game.xml");
+
+		_windowWidth = doc.FirstChildElement("application")->FirstChildElement("window")->IntAttribute("width", 1280);
+		_windowHeight = doc.FirstChildElement("application")->FirstChildElement("window")->IntAttribute("height", 720);
 	}
 
 	D3D11RenderSystem::~D3D11RenderSystem()
@@ -161,6 +169,20 @@ namespace Fab
 		_pImmediateContext->VSSetConstantBuffers(0, 1, &_pFrameConstantBuffer);
 		_pImmediateContext->PSSetConstantBuffers(0, 1, &_pFrameConstantBuffer);
 
+		//Create Color Sampler
+		D3D11_SAMPLER_DESC sampDesc;
+		ZeroMemory(&sampDesc, sizeof(sampDesc));
+		sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+		sampDesc.MinLOD = 0;
+		sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+		hr =_pd3dDevice->CreateSamplerState(&sampDesc, &_pColorSampler);
+		_pImmediateContext->PSSetSamplers(0, 1, &_pColorSampler);
+
 		return S_OK;
 	}
 
@@ -230,6 +252,8 @@ namespace Fab
 		SafeReleaseCom(_pd3dDevice);
 		SafeReleaseCom(_depthStencilView);
 		SafeReleaseCom(_depthStencilBuffer);
+
+		SafeReleaseCom(_pColorSampler);
 	}
 
 	void D3D11RenderSystem::Draw()
@@ -237,7 +261,7 @@ namespace Fab
 		_pImmediateContext->ClearRenderTargetView(_pRenderTargetView, reinterpret_cast<const float*>(&Colors::LightSteelBlue));
 		_pImmediateContext->ClearDepthStencilView(_depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-		_pFrameConstantBufferUpdate.LightType = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
+		//_pFrameConstantBufferUpdate.LightType = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 		_pImmediateContext->UpdateSubresource(_pFrameConstantBuffer, 0, nullptr, &_pFrameConstantBufferUpdate, 0, 0);
 	}
 

@@ -7,7 +7,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	UNREFERENCED_PARAMETER(nCmdShow);
 
 	Fab::D3D11RenderSystem renderSystem(1280, 720);
-	Fab::Application application(L"Template", 1280, 720);
+	Fab::Application application(L"Template");
 
 	if (!XMVerifyCPUSupport())
 	{

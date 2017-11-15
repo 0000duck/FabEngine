@@ -3,7 +3,7 @@
 
 namespace Fab
 {
-	const XMFLOAT3 PointLight::DefaultPosition = XMFLOAT3(-2.0f, 3.0f, -2.0f);
+	const XMFLOAT3 PointLight::DefaultPosition = XMFLOAT3(0.0f, 2.0f, 4.0f);
 	const float PointLight::DefaultRadius      = 1.0f;
 
 	PointLight::PointLight(LightType type)
@@ -29,7 +29,7 @@ namespace Fab
 
 		pFrameConstantBufferUpdate->LightColor    = _color;
 		pFrameConstantBufferUpdate->LightPosition = XMFLOAT4(_position.x, _position.y, _position.z, 1.0f);
-		pFrameConstantBufferUpdate->LightRadius   = XMFLOAT4(16.0f, 0.0f, 0.0f, 0.0f);
+		pFrameConstantBufferUpdate->LightRadius   = XMFLOAT4(_radius, 0.0f, 0.0f, 0.0f);
 		pFrameConstantBufferUpdate->LightType     = XMFLOAT4(1.0f, 0.0f, 0.0f, 0.0f);
 
 		(*pContext)->UpdateSubresource(*pFrameConstantBuffer, 0, nullptr, &pFrameConstantBufferUpdate, 0, 0);
@@ -60,14 +60,14 @@ namespace Fab
 			_position.x -= deltaTime * 4.0f;
 		}
 
-		if (keyboard.IsKeyPressed(KeyName::SPACE))
-		{
-			_position.y += deltaTime * 4.0f;
-		}
-
-		if (keyboard.IsKeyPressed(KeyName::CTRL))
+		if (keyboard.IsKeyPressed(KeyName::P))
 		{
 			_position.y -= deltaTime * 4.0f;
+		}
+
+		if (keyboard.IsKeyPressed(KeyName::M))
+		{
+			_position.y += deltaTime * 4.0f;
 		}
 	}
 

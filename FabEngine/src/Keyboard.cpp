@@ -40,12 +40,33 @@ namespace Fab
 
 	void Keyboard::Initialise()
 	{
+		_keys.push_back(Key(KeyName::A, 0x41));
 		_keys.push_back(Key(KeyName::Z, 0x5A));
-		_keys.push_back(Key(KeyName::Q, 0x51));
-		_keys.push_back(Key(KeyName::S, 0x53));
-		_keys.push_back(Key(KeyName::D, 0x44));
 		_keys.push_back(Key(KeyName::E, 0x45));
 		_keys.push_back(Key(KeyName::R, 0x52));
+		_keys.push_back(Key(KeyName::T, 0x54));
+		_keys.push_back(Key(KeyName::Y, 0x59));
+		_keys.push_back(Key(KeyName::U, 0x55));
+		_keys.push_back(Key(KeyName::I, 0x49));
+		_keys.push_back(Key(KeyName::O, 0x4F));
+		_keys.push_back(Key(KeyName::P, 0x50));
+		_keys.push_back(Key(KeyName::Q, 0x51));
+		_keys.push_back(Key(KeyName::R, 0x52));
+		_keys.push_back(Key(KeyName::S, 0x53));
+		_keys.push_back(Key(KeyName::D, 0x44));
+		_keys.push_back(Key(KeyName::F, 0x46));
+		_keys.push_back(Key(KeyName::G, 0x47));
+		_keys.push_back(Key(KeyName::H, 0x48));
+		_keys.push_back(Key(KeyName::J, 0x4A));
+		_keys.push_back(Key(KeyName::K, 0x4B));
+		_keys.push_back(Key(KeyName::L, 0x4C));
+		_keys.push_back(Key(KeyName::M, 0x4D));
+		_keys.push_back(Key(KeyName::W, 0x57));
+		_keys.push_back(Key(KeyName::X, 0x58));
+		_keys.push_back(Key(KeyName::C, 0x43));
+		_keys.push_back(Key(KeyName::V, 0x56));
+		_keys.push_back(Key(KeyName::B, 0x42));
+		_keys.push_back(Key(KeyName::N, 0x4E));
 		_keys.push_back(Key(KeyName::SPACE, VK_SPACE));
 		_keys.push_back(Key(KeyName::ESCAPE, VK_ESCAPE));
 		_keys.push_back(Key(KeyName::CTRL, VK_CONTROL));

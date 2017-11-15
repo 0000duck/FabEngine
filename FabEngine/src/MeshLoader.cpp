@@ -32,14 +32,14 @@ namespace Fab
 		}
 
 		//Tangent and BiNormals
-		/*if (aiMesh->HasTangentsAndBitangents())
+		if (aiMesh->HasTangentsAndBitangents())
 		{
 			for (UINT i = 0; i < aiMesh->mNumVertices; i++)
 			{
 				meshData.Vertices.at(i).Tangent = XMFLOAT3(reinterpret_cast<const float*>(&aiMesh->mTangents[i]));
 				meshData.Vertices.at(i).BiNormal = XMFLOAT3(reinterpret_cast<const float*>(&aiMesh->mBitangents[i]));
 			}
-		}*/
+		}
 
 		// Faces
 		if (aiMesh->HasFaces())
@@ -57,6 +57,19 @@ namespace Fab
 					k++;
 				}
 			}
+		}
+
+		// Texture Coordinates
+		UINT uvChannelCount = aiMesh->GetNumUVChannels();
+		for (UINT i = 0; i < uvChannelCount; i++)
+		{
+			aiVector3D* aiTextureCoordinates = aiMesh->mTextureCoords[i];
+			for (UINT j = 0; j < aiMesh->mNumVertices; j++)
+			{
+				meshData.Vertices[j].Texture = XMFLOAT2(reinterpret_cast<const float*>(&aiTextureCoordinates[j]));
+			}
+
+			break;
 		}
 
 		//Vertex colors

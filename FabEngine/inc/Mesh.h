@@ -1,6 +1,7 @@
 #pragma once
 
 #include <DirectXComponentsPCH.h>
+#include "Texture.h"
 #include "IEntity.h"
 #include "Vertex.h"
 
@@ -9,6 +10,7 @@ using namespace DirectX;
 namespace Fab
 {
 	class D3D11RenderSystem;
+	class Texture;
 
 	struct MeshData
 	{
@@ -42,8 +44,10 @@ namespace Fab
 		void        SetMeshData(MeshData& data);
 		void	    SetSpecularColor(XMFLOAT4 specularColor);
 		void        SetSpecularPower(float specularPower);
+		void        SetTexture(TexturePtr texture);
 		MeshData&   GetMeshData();
 		XMFLOAT4X4& GetWorld();
+		XMFLOAT3&   GetPosition();
 
 	public:
 		static const XMFLOAT4 DefaultSpecularColor;
@@ -62,6 +66,9 @@ namespace Fab
 
 		XMFLOAT4           _specularColor;
 		float              _specularPower;
+
+		TexturePtr         _texture;
+
 	};
 
 	typedef std::shared_ptr<Mesh> MeshPtr;

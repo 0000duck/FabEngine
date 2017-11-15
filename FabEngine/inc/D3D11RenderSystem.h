@@ -1,6 +1,7 @@
 #pragma once
 
 #include <DirectXComponentsPCH.h>
+#include "DDSTextureLoader.h"
 #include "ShaderManager.h"
 #include "Application.h"
 #include "Vertex.h"
@@ -23,6 +24,7 @@ namespace Fab
 
 		XMFLOAT4 SpecularColor;
 		XMFLOAT4 SpecularPower;   //float
+		XMFLOAT4 HasMaterial;
 
 		XMFLOAT4 DirectionalColor;
 		XMFLOAT4 DirectionalDirection; //float3
@@ -32,9 +34,6 @@ namespace Fab
 
 		XMFLOAT4 LightRadius;     //float
 		XMFLOAT4 LightPosition;   //float3
-
-		XMFLOAT4 LightInnerAngle; //float3
-		XMFLOAT4 LightOuterAngle; //float3
 
 		XMFLOAT4 LightType;       //int
 	};
@@ -88,5 +87,7 @@ namespace Fab
 		UINT                      _windowHeight;
 		UINT                      _windowWidth;
 		UINT                      _4xMsaaQuality;
+
+		ID3D11SamplerState *      _pColorSampler;
 	};
 }

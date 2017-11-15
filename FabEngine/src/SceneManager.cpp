@@ -3,7 +3,7 @@
 
 namespace Fab
 {
-	const XMFLOAT4 SceneManager::DefaultAmbientColor = XMFLOAT4(1.0f, 1.0f, 1.0f, 0.3f);
+	const XMFLOAT4 SceneManager::DefaultAmbientColor = XMFLOAT4(1.0f, 1.0f, 1.0f, 0.2f);
 
 	SceneManager::SceneManager()
 		: _ambientColor(DefaultAmbientColor)
@@ -27,133 +27,162 @@ namespace Fab
 
 	void SceneManager::Initialise()
 	{
+		tinyxml2::XMLDocument doc;
+		doc.LoadFile("data/scene.xml");
+
+		tinyxml2::XMLElement* sceneElement = doc.FirstChildElement("scene");
+
+		//load ambient color
+		{
+			tinyxml2::XMLElement* colorElement = sceneElement->FirstChildElement("ambient")->FirstChildElement("color");
+			_ambientColor.x = colorElement->FloatAttribute("r", _ambientColor.x);
+			_ambientColor.y = colorElement->FloatAttribute("g", _ambientColor.y);
+			_ambientColor.z = colorElement->FloatAttribute("b", _ambientColor.z);
+			_ambientColor.w = colorElement->FloatAttribute("i", _ambientColor.w);
+		}
+
+		//load textures
+		{
+			tinyxml2::XMLElement* texturesElement = sceneElement->FirstChildElement("textures");
+
+			for (tinyxml2::XMLElement* textureElement = texturesElement->FirstChildElement("texture"); textureElement != nullptr; textureElement = textureElement->NextSiblingElement())
+			{
+				const char* file = textureElement->Attribute("file");
+				const char* name = textureElement->Attribute("name");
+
+				WCHAR* fileW;
+
+				int nChars = MultiByteToWideChar(CP_ACP, 0, file, -1, NULL, 0);
+				fileW = new WCHAR[nChars];
+				MultiByteToWideChar(CP_ACP, 0, file, -1, (LPWSTR)fileW, nChars);
+
+				_textureManager.Load(fileW, std::string(name));
+
+				delete[] fileW;
+			}
+		}
+
+		//load models
+		{
+			tinyxml2::XMLElement* modelsElement = sceneElement->FirstChildElement("models");
+
+			for (tinyxml2::XMLElement* modelElement = modelsElement->FirstChildElement("model"); modelElement != nullptr; modelElement = modelElement->NextSiblingElement())
+			{
+				std::string file = modelElement->Attribute("file");
+				std::string name = modelElement->Attribute("name");
+				const char* texture = modelElement->Attribute("texture");
+
+				_modelManager.Load(file, name);
+
+				{
+					Model model;
+					_modelManager.GetModel(name, model, Colors::Silver);
+
+					if (texture != nullptr)
+					{
+						model.GetMeshes().at(0)->SetTexture(_textureManager.GetTexturePtr(texture));
+					}
+
+					XMMATRIX matrix = XMMatrixIdentity();
+
+					for (tinyxml2::XMLElement* transformationElement = modelElement->FirstChildElement("transformations")->FirstChildElement("transformation"); transformationElement != nullptr; transformationElement = transformationElement->NextSiblingElement())
+					{
+						std::string type = transformationElement->Attribute("type");
+
+						if (type == "rotation-x")
+						{
+							float x = transformationElement->FloatAttribute("x");
+							matrix *= XMMatrixRotationX(x);
+						}
+						else if (type == "rotation-y")
+						{
+							float y = transformationElement->FloatAttribute("y");
+							matrix *= XMMatrixRotationY(y);
+						}
+						else if (type == "rotation-z")
+						{
+							float z = transformationElement->FloatAttribute("z");
+							matrix *= XMMatrixRotationZ(z);
+						}
+						else if (type == "translation")
+						{
+							float x = transformationElement->FloatAttribute("x");
+							float y = transformationElement->FloatAttribute("y");
+							float z = transformationElement->FloatAttribute("z");
+
+							matrix *= XMMatrixTranslation(x, y, z);
+						}
+						else if (type == "scaling")
+						{
+							float x = transformationElement->FloatAttribute("x");
+							float y = transformationElement->FloatAttribute("y");
+							float z = transformationElement->FloatAttribute("z");
+
+							matrix *= XMMatrixScaling(x, y, z);
+						}
+					}
+
+					model.GetMeshes().at(0)->Transform(matrix);
+					InsertModel(name, std::make_shared<Model>(model));
+				}
+			}
+		}
+
+		//Load lights
+		{
+			tinyxml2::XMLElement* lightsElement = sceneElement->FirstChildElement("lights");
+
+			for (tinyxml2::XMLElement* lightElement = lightsElement->FirstChildElement("light"); lightElement != nullptr; lightElement = lightElement->NextSiblingElement())
+			{
+				std::string type = lightElement->Attribute("type");
+				std::string name = lightElement->Attribute("name");
+
+				XMFLOAT4 color;
+
+				tinyxml2::XMLElement* colorElement = lightElement->FirstChildElement("color");
+				color.x = colorElement->FloatAttribute("r");
+				color.y = colorElement->FloatAttribute("g");
+				color.z = colorElement->FloatAttribute("b");
+				color.w = colorElement->FloatAttribute("i");
+
+				if (type == "directional")
+				{
+					DirectionalLight light;
+					light.SetColor(color);
+
+					const char* rotationAxe = lightElement->Attribute("rotation-axe");
+
+					if (rotationAxe != nullptr)
+					{
+						float rotation = lightElement->FloatAttribute("rotation-value");
+
+						if (rotationAxe == "x")
+						{
+							light.ApplyRotation(XMMatrixRotationX(rotation));
+						}
+						else if (rotationAxe == "y")
+						{
+							light.ApplyRotation(XMMatrixRotationY(rotation));
+						}
+						else
+						{
+							light.ApplyRotation(XMMatrixRotationZ(rotation));
+						}
+					}
+
+					InsertLight(name, std::make_shared<DirectionalLight>(light));
+				}
+				else if (type == "point")
+				{
+					PointLight light;
+					light.SetColor(color);
+					light.SetRadius(20.0f);
+					InsertLight("point", std::make_shared<PointLight>(light));
+				}
+			}
+		}
+
 		UpdateAmbientColor();
-
-		_modelManager.Load("models/monkey-big.blend", "monkey");
-		//_modelManager.Load("models/landscape-small.blend", "landscape");
-
-		{
-			Model model;
-			_modelManager.GetModel("monkey", model, Colors::Silver);
-			model.GetMeshes().at(0)->Transform(
-				XMMatrixRotationX(-2.0f*G_PI / 3.0f) *
-				XMMatrixRotationY(XM_PI) *
-				XMMatrixScaling(2.0f, 2.0f, 2.0f) *
-				XMMatrixTranslation(0.0f, 0.0f, 0.0f)
-			);
-			InsertModel("monkey", std::make_shared<Model>(model));
-		}
-
-		{
-			DirectionalLight light;
-			light.SetColor(XMFLOAT4(1.0f, 1.0f, 0.9f, 0.3f));
-			light.ApplyRotation(XMMatrixRotationY(XM_PIDIV4));
-			InsertLight("diffuse", std::make_shared<DirectionalLight>(light));
-		}
-
-		{
-			PointLight light;
-			light.SetColor(XMFLOAT4(1.0f, 1.0f, 1.0f, 0.3f));
-			light.SetPosition(XMFLOAT3(3.0f, 1.0f, -5.0f));
-			light.SetRadius(16.0f);
-			InsertLight("point", std::make_shared<PointLight>(light));
-		}
-
-		/*{
-			Model model;
-			_modelManager.GetModel("landscape", model, Colors::Silver);
-			model.GetMeshes().at(0)->Transform(
-				XMMatrixRotationX(-XM_PIDIV2) *
-				XMMatrixScaling(16.0f, 16.0f, 16.0f)
-			);
-			InsertModel("landscape", std::make_shared<Model>(model));
-		}*/
-
-		/*
-		{
-			
-			Model model;
-			_modelManager.GetModel("terminator", model, Colors::Red);
-			model.GetMeshes().at(0)->Transform(XMMatrixRotationY(XM_PI)*XMMatrixTranslation(0.0f, 0.0f, 1.0f));
-			InsertEntity("terminator-1", std::make_shared<Model>(model));
-		}
-
-		{
-			Model model;
-			_modelManager.GetModel("terminator", model, Colors::Green);
-			model.GetMeshes().at(0)->Transform(XMMatrixTranslation(2.2f, 0.0f, 1.0f));
-			InsertEntity("terminator-2", std::make_shared<Model>(model));
-		}
-
-		{
-			Model model;
-			_modelManager.GetModel("terminator", model, Colors::Blue);
-			model.GetMeshes().at(0)->Transform(XMMatrixTranslation(-2.2f, 0.0f, 1.0f));
-			InsertEntity("terminator-3", std::make_shared<Model>(model));
-		}
-
-		{
-			Model model;
-			_modelManager.GetModel("sphere", model, Colors::Magenta);
-			model.GetMeshes().at(0)->Transform(XMMatrixTranslation(0.0f, 0.5f, -2.5f));
-			InsertEntity("sphere", std::make_shared<Model>(model));
-		}
-
-		{
-			Model model;
-			_modelManager.GetModel("plan", model, Colors::LightSteelBlue);
-			model.GetMeshes().at(0)->Transform(
-				XMMatrixScaling(5.0f, 3.0f, 1.0f) *
-				XMMatrixRotationX(XM_PI) *
-				XMMatrixTranslation(0.0f, 3.0f, 4.0f)
-			);
-			InsertEntity("wall-behind", std::make_shared<Model>(model));
-		}
-
-		{
-			Model model;
-			_modelManager.GetModel("plan", model, Colors::LightSteelBlue);
-			model.GetMeshes().at(0)->Transform(
-				XMMatrixScaling(4.0f, 3.0f, 1.0f) * 
-				XMMatrixRotationY(XM_PIDIV2) * 
-				XMMatrixTranslation(-5.0f, 3.0f, 0.0f)
-			);
-			InsertEntity("wall-left", std::make_shared<Model>(model));
-		}
-
-		{
-			Model model;
-			_modelManager.GetModel("plan", model, Colors::LightSteelBlue);
-			model.GetMeshes().at(0)->Transform(
-				XMMatrixScaling(4.0f, 3.0f, 1.0f) *
-				XMMatrixRotationY(-XM_PIDIV2) *
-				XMMatrixTranslation(5.0f, 3.0f, 0.0f)
-			);
-			InsertEntity("wall-right", std::make_shared<Model>(model));
-		}
-
-		{
-			Model model;
-			_modelManager.GetModel("plan", model, Colors::LightSteelBlue);
-			model.GetMeshes().at(0)->Transform(
-				XMMatrixScaling(5.0f, 4.0f, 1.0f) *
-				XMMatrixRotationX(-XM_PIDIV2) *
-				XMMatrixTranslation(0.0f, 0.0f, 0.0f)
-			);
-			InsertEntity("ground", std::make_shared<Model>(model));
-		}
-
-		{
-			Model model;
-			_modelManager.GetModel("plan", model, Colors::LightSteelBlue);
-			model.GetMeshes().at(0)->Transform(
-				XMMatrixScaling(5.0f, 4.0f, 1.0f) *
-				XMMatrixRotationX(XM_PIDIV2) *
-				XMMatrixTranslation(0.0f, 6.0f, 0.0f)
-			);
-			InsertEntity("roof", std::make_shared<Model>(model));
-		}
-		*/
 	}
 
 	void SceneManager::Draw()
@@ -173,11 +202,6 @@ namespace Fab
 
 	void SceneManager::Update(float deltaTime, float totalTime)
 	{
-		Model& model = dynamic_cast<Model&>(GetModel("monkey"));
-		//model.GetMeshes().at(0)->Transform(XMMatrixRotationY(deltaTime));
-
-		//PointLight& light = dynamic_cast<PointLight&>(GetLight("point"));
-
 		if (totalTime > 1.0f)
 			_camera.Update(deltaTime, totalTime);
 

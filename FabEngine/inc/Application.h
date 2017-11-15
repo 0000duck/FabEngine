@@ -14,7 +14,7 @@ namespace Fab
 	class Application
 	{
 	public:
-		Application(std::wstring mainWndCaption, UINT windowWidth, UINT windowHeight);
+		Application(std::wstring mainWndCaption);
 		~Application();
 		static Application& GetApplication();
 		static Application* GetSingletonPtr();

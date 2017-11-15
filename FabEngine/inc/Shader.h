@@ -27,7 +27,7 @@ namespace Fab
 		HRESULT              CompileShader(ID3DBlob** shaderBlob, LPCSTR szEntryPoint, LPCSTR szShaderModel);
 
 	public:
-		static const D3D11_INPUT_ELEMENT_DESC VertexData[5];
+		static const D3D11_INPUT_ELEMENT_DESC VertexData[6];
 
 	private:
 		D3D11RenderSystem&  _renderSystem;

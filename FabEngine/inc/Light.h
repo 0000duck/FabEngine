@@ -10,6 +10,11 @@ namespace Fab
 		POINT, SPOT, DIRECTIONAL
 	};
 
+	enum LightTypeShader
+	{
+		POINT = 1, SPOT = 2, DIECTIONAL = 0
+	};
+
 	class Light : public IEntity
 	{
 	public:

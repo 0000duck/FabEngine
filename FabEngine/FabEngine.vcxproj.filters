@@ -25,12 +25,6 @@
     <Filter Include="Fichiers d%27en-tête\Core">
       <UniqueIdentifier>{496fcf72-7196-4d29-b9c7-95faa407de1c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\Core\Resource">
-      <UniqueIdentifier>{1ef33a65-9cd0-4fd4-b542-a375be99e420}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Core\Resource">
-      <UniqueIdentifier>{cf17c173-7d88-41fe-9d63-af99e1779079}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fichiers d%27en-tête\Core\Scene">
       <UniqueIdentifier>{e43e643b-681a-445e-bf91-c93a31a2057b}</UniqueIdentifier>
     </Filter>
@@ -49,29 +43,11 @@
     <Filter Include="Fichiers sources\Graphics\Render">
       <UniqueIdentifier>{598fe5fc-23cd-4c00-a4c5-9e99d785c0a7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\Core\Physic">
-      <UniqueIdentifier>{10b32d6b-62c4-4e3c-9ad2-a9882143c941}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Core\Physic">
-      <UniqueIdentifier>{938f254b-75d1-4fc0-ae16-4cee4c0e3212}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Core\Physic\Particle">
-      <UniqueIdentifier>{4e07d65d-c996-408d-9793-69540c9f29d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Core\Physic\Particle">
-      <UniqueIdentifier>{2a719037-ac72-4fd3-8dce-094bbe49de49}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fichiers d%27en-tête\Core\Component">
       <UniqueIdentifier>{84feef66-11a5-4141-b9fe-f975716a313c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Fichiers sources\Core\Component">
       <UniqueIdentifier>{e97a7437-446a-430d-9845-e7ede4486b50}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Core\Factory">
-      <UniqueIdentifier>{97c1c2dc-60a7-4393-b243-00fd8c2ee027}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Core\Factory">
-      <UniqueIdentifier>{0a36b41e-0a6c-4d3d-9c89-34d829ab30ba}</UniqueIdentifier>
     </Filter>
     <Filter Include="Fichiers d%27en-tête\Core\Scene\Model">
       <UniqueIdentifier>{6dcf7cf3-5be9-49f5-aa55-b23b1aaa7209}</UniqueIdentifier>
@@ -84,6 +60,18 @@
     </Filter>
     <Filter Include="Fichiers d%27en-tête\Core\Scene\Light">
       <UniqueIdentifier>{acf9010f-db23-461d-aec5-2449e91faec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Graphics\Shader">
+      <UniqueIdentifier>{d09fa41f-92b9-4bdf-b61c-e6b68972a87a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Graphics\Shader">
+      <UniqueIdentifier>{5e33501a-b311-4bc4-9924-76ea9e5617ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Graphics\Texture">
+      <UniqueIdentifier>{5e937069-952a-43f8-a862-0536140d9541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Graphics\Texture">
+      <UniqueIdentifier>{4967dd23-920b-45f0-97fb-384a9e9f47c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,32 +90,8 @@
     <ClCompile Include="inc\DirectXComponentsPCH.cpp">
       <Filter>Fichiers sources\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vertex.cpp">
-      <Filter>Fichiers sources\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Shader.cpp">
-      <Filter>Fichiers sources\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ParticleSystem.cpp">
-      <Filter>Fichiers sources\Core\Physic\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Particle.cpp">
-      <Filter>Fichiers sources\Core\Physic\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ParticleManager.cpp">
-      <Filter>Fichiers sources\Core\Physic\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Pool.cpp">
-      <Filter>Fichiers sources\Core\Resource</Filter>
-    </ClCompile>
     <ClCompile Include="src\IEntity.cpp">
       <Filter>Fichiers sources\Core\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IFactory.cpp">
-      <Filter>Fichiers sources\Core\Factory</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LightFactory.cpp">
-      <Filter>Fichiers sources\Core\Factory</Filter>
     </ClCompile>
     <ClCompile Include="src\SceneManager.cpp">
       <Filter>Fichiers sources\Core\Scene</Filter>
@@ -147,17 +111,11 @@
     <ClCompile Include="src\Mouse.cpp">
       <Filter>Fichiers sources\Core\Component</Filter>
     </ClCompile>
-    <ClCompile Include="src\ShaderManager.cpp">
-      <Filter>Fichiers sources\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Light.cpp">
       <Filter>Fichiers sources\Core\Scene\Light</Filter>
     </ClCompile>
     <ClCompile Include="src\Mesh.cpp">
       <Filter>Fichiers sources\Core\Scene\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MeshFactory.cpp">
-      <Filter>Fichiers sources\Core\Factory</Filter>
     </ClCompile>
     <ClCompile Include="src\Model.cpp">
       <Filter>Fichiers sources\Core\Scene\Model</Filter>
@@ -183,6 +141,21 @@
     <ClCompile Include="src\VectorHelper.cpp">
       <Filter>Fichiers d%27en-tête\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\DDSTextureLoader.cpp">
+      <Filter>Fichiers sources\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader.cpp">
+      <Filter>Fichiers sources\Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderManager.cpp">
+      <Filter>Fichiers sources\Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>Fichiers sources\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureManager.cpp">
+      <Filter>Fichiers sources\Graphics\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Timer.h">
@@ -200,29 +173,8 @@
     <ClInclude Include="inc\Vertex.h">
       <Filter>Fichiers d%27en-tête\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Shader.h">
-      <Filter>Fichiers d%27en-tête\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\ParticleSystem.h">
-      <Filter>Fichiers d%27en-tête\Core\Physic\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Particle.h">
-      <Filter>Fichiers d%27en-tête\Core\Physic\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\ParticleManager.h">
-      <Filter>Fichiers d%27en-tête\Core\Physic\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Pool.h">
-      <Filter>Fichiers d%27en-tête\Core\Resource</Filter>
-    </ClInclude>
     <ClInclude Include="inc\IEntity.h">
       <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\IFactory.h">
-      <Filter>Fichiers d%27en-tête\Core\Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\LightFactory.h">
-      <Filter>Fichiers d%27en-tête\Core\Factory</Filter>
     </ClInclude>
     <ClInclude Include="inc\SceneManager.h">
       <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
@@ -242,9 +194,6 @@
     <ClInclude Include="inc\Mouse.h">
       <Filter>Fichiers d%27en-tête\Core\Component</Filter>
     </ClInclude>
-    <ClInclude Include="inc\ShaderManager.h">
-      <Filter>Fichiers d%27en-tête\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Light.h">
       <Filter>Fichiers d%27en-tête\Core\Scene\Light</Filter>
     </ClInclude>
@@ -253,9 +202,6 @@
     </ClInclude>
     <ClInclude Include="inc\Mesh.h">
       <Filter>Fichiers d%27en-tête\Core\Scene\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\MeshFactory.h">
-      <Filter>Fichiers d%27en-tête\Core\Factory</Filter>
     </ClInclude>
     <ClInclude Include="inc\ModelManager.h">
       <Filter>Fichiers d%27en-tête\Core\Scene\Model</Filter>
@@ -277,6 +223,21 @@
     </ClInclude>
     <ClInclude Include="inc\VectorHelper.h">
       <Filter>Fichiers sources\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\DDSTextureLoader.h">
+      <Filter>Fichiers d%27en-tête\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ShaderManager.h">
+      <Filter>Fichiers d%27en-tête\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Shader.h">
+      <Filter>Fichiers d%27en-tête\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Texture.h">
+      <Filter>Fichiers d%27en-tête\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TextureManager.h">
+      <Filter>Fichiers d%27en-tête\Graphics\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

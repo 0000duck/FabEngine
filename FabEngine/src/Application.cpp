@@ -10,10 +10,11 @@ namespace Fab
 {
 	Application* Application::_pApplication = nullptr;
 
-	Application::Application(std::wstring mainWndCaption, UINT windowWidth, UINT windowHeight)
-		: _mainWndCaption(mainWndCaption)
-		, _windowWidth(windowWidth)
-		, _windowHeight(windowHeight)
+	Application::Application(std::wstring mainWndCaption)
+		: _renderSystem(D3D11RenderSystem::GetRenderSystem())
+		, _mainWndCaption(mainWndCaption)
+		, _windowWidth(_renderSystem.GetWindowWidth())
+		, _windowHeight(_renderSystem.GetWindowHeight())
 		, _appPaused(false)
 		, _minimized(false)
 		, _maximized(false)
@@ -21,7 +22,6 @@ namespace Fab
 		, _initialized(true)
 		, _hInst(nullptr)
 		, _hWnd(nullptr)
-		, _renderSystem(D3D11RenderSystem::GetRenderSystem())
 	{
 		_pApplication = static_cast<Application*>(this);
 	}
