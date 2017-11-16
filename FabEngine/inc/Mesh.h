@@ -45,6 +45,8 @@ namespace Fab
 		void	    SetSpecularColor(XMFLOAT4 specularColor);
 		void        SetSpecularPower(float specularPower);
 		void        SetTexture(TexturePtr texture);
+		void        SetSpecular(TexturePtr specular);
+		void        SetNormal(TexturePtr normal);
 		MeshData&   GetMeshData();
 		XMFLOAT4X4& GetWorld();
 		XMFLOAT3&   GetPosition();
@@ -68,6 +70,8 @@ namespace Fab
 		float              _specularPower;
 
 		TexturePtr         _texture;
+		TexturePtr         _specular;
+		TexturePtr         _normal;
 
 	};
 

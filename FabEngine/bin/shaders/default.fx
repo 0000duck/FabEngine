@@ -1,5 +1,3 @@
-#define FLIP_TEXTURE_Y 0
-
 float3 get_vector_color_contribution(float4 light, float3 color)
 {
 	// Color (.rgb) * Intensity (.a)
@@ -14,11 +12,7 @@ float3 get_scalar_color_contribution(float4 light, float color)
 
 float2 get_corrected_texture_coordinate(float2 textureCoordinate)
 {
-#if FLIP_TEXTURE_Y
-	return float2(textureCoordinate.x, 1.0 - textureCoordinate.y);
-#else
 	return textureCoordinate;
-#endif
 }
 
 cbuffer FrameConstantBuffer : register( b0 )
@@ -35,6 +29,8 @@ cbuffer FrameConstantBuffer : register( b0 )
 	float4 SpecularColor;
 	float4 SpecularPower;        //float
 	float4 HasMaterial;          //float
+	float4 HasSpecular;          //float
+	float4 HasNormal;            //float
 
 	float4 DirectionalColor;
 	float4 DirectionalDirection; //float3
@@ -49,17 +45,19 @@ cbuffer FrameConstantBuffer : register( b0 )
 }
 
 Texture2D ColorTexture : register(t0);
+Texture2D SpecularTexture : register(t1);
+Texture2D NormalTexture : register(t2);
 
 SamplerState ColorSampler : register(s0);
 
 struct VS_INPUT
 {
-    float4 Position : POSITION;
-    float4 Color    : COLOR0;
-	float2 Texture  : TEXCOORD0;
-    float3 Normal   : NORMAL;
-	float3 Tangent  : TANGENT;
-	float3 Binormal : BINORMAL;
+    float4 Position             : POSITION;
+    float4 Color                : COLOR0;
+	float2 Texture              : TEXCOORD0;
+    float3 Normal               : NORMAL;
+	float3 Tangent              : TANGENT;
+	float3 Binormal             : BINORMAL;
 };
 
 struct VS_OUTPUT
@@ -68,6 +66,8 @@ struct VS_OUTPUT
     float4 Color                : COLOR0;
 	float2 Texture              : TEXCOORD0;
     float3 Normal               : NORMAL;
+	float3 Tangent              : TANGENT;
+	float3 Binormal             : BINORMAL;
 
 	float3 ViewDirection        : COLOR1;
 	float3 LightViewDirection   : COLOR2;
@@ -88,6 +88,8 @@ VS_OUTPUT vertex_shader( VS_INPUT IN )
     OUT.Color                = IN.Color;
 	OUT.Texture              = get_corrected_texture_coordinate(IN.Texture);
     OUT.Normal               = normalize(mul(float4(IN.Normal, 0.0f), World)).xyz;
+	OUT.Tangent              = normalize(mul(float4(IN.Tangent, 0.0f), World)).xyz;
+	OUT.Binormal             = cross(OUT.Normal, OUT.Tangent);
 
 	//Directional Data
     OUT.DirectionalDirection.xyz = normalize(-(DirectionalDirection.xyz));
@@ -112,8 +114,20 @@ VS_OUTPUT vertex_shader( VS_INPUT IN )
 float4 pixel_shader( VS_OUTPUT IN ) : SV_Target
 {
     float4 OUT                      = (float4)0;
+	
+	float3 normal                   = (float3)0;
 
-    float3 normal                   = normalize(IN.Normal);
+	if (HasNormal.x == 1.0f)
+	{
+		float3 sampledNormal = (2 * NormalTexture.Sample(ColorSampler, IN.Texture).xyz) - 1.0f;
+		float3x3 tbn         = float3x3(IN.Tangent, IN.Binormal, IN.Normal);
+		normal               = mul(sampledNormal, tbn);
+	}
+	else
+	{
+		normal = normalize(IN.Normal);
+	}
+
     float3 directionalDirection     = normalize(IN.DirectionalDirection.xyz);
 	float3 directionalViewDirection = normalize(IN.ViewDirection);
     float n_dot_l                   = dot(directionalDirection, normal);
@@ -167,6 +181,11 @@ float4 pixel_shader( VS_OUTPUT IN ) : SV_Target
 			diffuse += get_vector_color_contribution(lightColor, lightCoefficients.y * lightColor.rgb) * IN.LightDirection.w;
 			specular += get_scalar_color_contribution(SpecularColor, min(lightCoefficients.z, lightColor.w)) * IN.LightDirection.w;
 		}
+	}
+
+	if (HasSpecular.x == 1.0f)
+	{
+		specular.xyz *= SpecularTexture.Sample(ColorSampler, IN.Texture).xyz;
 	}
 
 	OUT.rgb = ambient + diffuse + specular;

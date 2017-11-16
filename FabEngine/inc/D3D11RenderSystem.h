@@ -25,6 +25,8 @@ namespace Fab
 		XMFLOAT4 SpecularColor;
 		XMFLOAT4 SpecularPower;   //float
 		XMFLOAT4 HasMaterial;
+		XMFLOAT4 HasSpecular;
+		XMFLOAT4 HasNormal;
 
 		XMFLOAT4 DirectionalColor;
 		XMFLOAT4 DirectionalDirection; //float3

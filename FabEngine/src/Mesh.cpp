@@ -82,14 +82,19 @@ namespace Fab
 		_shader->Use();
 
 		if (_texture != nullptr)
-		{
-			_texture->Use();
 			pFrameConstantBufferUpdate->HasMaterial = XMFLOAT4(1.0f, 0.0f, 0.0f, 0.0f);
-		}
 		else
-		{
 			pFrameConstantBufferUpdate->HasMaterial = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
-		}
+
+		if (_specular != nullptr)
+			pFrameConstantBufferUpdate->HasSpecular = XMFLOAT4(1.0f, 0.0f, 0.0f, 0.0f);
+		else
+			pFrameConstantBufferUpdate->HasSpecular = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
+
+		if (_normal != nullptr)
+			pFrameConstantBufferUpdate->HasNormal = XMFLOAT4(1.0f, 0.0f, 0.0f, 0.0f);
+		else
+			pFrameConstantBufferUpdate->HasNormal = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 
 		UINT stride = sizeof(VertexData);
 		UINT offset = 0;
@@ -169,6 +174,16 @@ namespace Fab
 	void Mesh::SetTexture(TexturePtr texture)
 	{
 		_texture = texture;
+	}
+
+	void Mesh::SetSpecular(TexturePtr specular)
+	{
+		_specular = specular;
+	}
+
+	void Mesh::SetNormal(TexturePtr normal)
+	{
+		_normal = normal;
 	}
 
 	MeshData& Mesh::GetMeshData()

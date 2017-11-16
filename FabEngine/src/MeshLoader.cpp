@@ -31,16 +31,6 @@ namespace Fab
 			}
 		}
 
-		//Tangent and BiNormals
-		if (aiMesh->HasTangentsAndBitangents())
-		{
-			for (UINT i = 0; i < aiMesh->mNumVertices; i++)
-			{
-				meshData.Vertices.at(i).Tangent = XMFLOAT3(reinterpret_cast<const float*>(&aiMesh->mTangents[i]));
-				meshData.Vertices.at(i).BiNormal = XMFLOAT3(reinterpret_cast<const float*>(&aiMesh->mBitangents[i]));
-			}
-		}
-
 		// Faces
 		if (aiMesh->HasFaces())
 		{
@@ -54,8 +44,55 @@ namespace Fab
 				for (UINT j = 0; j < face->mNumIndices; j++)
 				{
 					meshData.Indices.push_back((WORD)face->mIndices[j]);
-					k++;
 				}
+
+				// Edges of the triangle : postion delta
+				XMVECTOR deltaPos1Vec = XMLoadFloat3(&meshData.Vertices.at(meshData.Indices.at(k + 1)).Position) - XMLoadFloat3(&meshData.Vertices.at(meshData.Indices.at(k)).Position);
+				XMVECTOR deltaPos2Vec = XMLoadFloat3(&meshData.Vertices.at(meshData.Indices.at(k + 2)).Position) - XMLoadFloat3(&meshData.Vertices.at(meshData.Indices.at(k)).Position);
+
+				// UV delta
+				XMVECTOR deltaUV1Vec = XMLoadFloat3(&meshData.Vertices.at(meshData.Indices.at(k + 1)).Normal) - XMLoadFloat3(&meshData.Vertices.at(meshData.Indices.at(k)).Normal);
+				XMVECTOR deltaUV2Vec = XMLoadFloat3(&meshData.Vertices.at(meshData.Indices.at(k + 2)).Normal) - XMLoadFloat3(&meshData.Vertices.at(meshData.Indices.at(k)).Normal);
+			
+				XMFLOAT3 deltaPos1;
+				XMFLOAT3 deltaPos2;
+				XMFLOAT3 deltaUV1;
+				XMFLOAT3 deltaUV2;
+
+				XMStoreFloat3(&deltaPos1, deltaPos1Vec);
+				XMStoreFloat3(&deltaPos2, deltaPos2Vec);
+
+				XMStoreFloat3(&deltaUV1, deltaUV1Vec);
+				XMStoreFloat3(&deltaUV1, deltaUV2Vec);
+
+				float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
+				XMVECTOR tangentVec = (deltaPos1Vec * deltaUV2.y - deltaPos2Vec * deltaUV1.y) * r;
+				XMVECTOR bitangentVec = (deltaPos2Vec * deltaUV1.x - deltaPos1Vec * deltaUV2.x) * r;
+
+				XMFLOAT3 tangent;
+				XMFLOAT3 bitangent;
+
+				XMStoreFloat3(&tangent, tangentVec);
+				XMStoreFloat3(&bitangent, bitangentVec);
+
+				meshData.Vertices.at(meshData.Indices.at(k)).Tangent = tangent;
+				meshData.Vertices.at(meshData.Indices.at(k + 1)).Tangent = tangent;
+				meshData.Vertices.at(meshData.Indices.at(k + 2)).Tangent = tangent;
+				meshData.Vertices.at(meshData.Indices.at(k)).BiNormal = bitangent;
+				meshData.Vertices.at(meshData.Indices.at(k + 1)).BiNormal = bitangent;
+				meshData.Vertices.at(meshData.Indices.at(k + 2)).BiNormal = bitangent;
+
+				k++;
+			}
+		}
+
+		//Tangent and BiNormals
+		if (aiMesh->HasTangentsAndBitangents())
+		{
+			for (UINT i = 0; i < aiMesh->mNumVertices; i++)
+			{
+				meshData.Vertices.at(i).Tangent = XMFLOAT3(reinterpret_cast<const float*>(&aiMesh->mTangents[i]));
+				meshData.Vertices.at(i).BiNormal = XMFLOAT3(reinterpret_cast<const float*>(&aiMesh->mBitangents[i]));
 			}
 		}
 

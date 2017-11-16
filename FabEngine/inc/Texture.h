@@ -7,7 +7,7 @@ namespace Fab
 	class Texture
 	{
 	public:
-		Texture(WCHAR* szFileName);
+		Texture(WCHAR* szFileName, int slot);
 		~Texture();
 		void                       Load();
 		void                       Use();
@@ -17,6 +17,7 @@ namespace Fab
 		D3D11RenderSystem&        _renderSystem;
 		WCHAR*                    _szFileName;
 		ID3D11ShaderResourceView* _pTextureRV;
+		int                       _slot;
 	};
 
 	typedef std::shared_ptr<Texture> TexturePtr;

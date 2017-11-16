@@ -3,10 +3,11 @@
 
 namespace Fab
 {
-	Texture::Texture(WCHAR* szFileName)
+	Texture::Texture(WCHAR* szFileName, int slot)
 		: _renderSystem(D3D11RenderSystem::GetRenderSystem())
 		, _szFileName(szFileName)
 		, _pTextureRV(nullptr)
+		, _slot(slot)
 	{
 		_pTextureRV = nullptr;
 	}
@@ -22,7 +23,7 @@ namespace Fab
 		ID3D11DeviceContext** pContext = _renderSystem.GetPImmediateContext();
 
 		HRESULT hr = CreateDDSTextureFromFile(*pd3dDevice, _szFileName, nullptr, &_pTextureRV);
-		(*pContext)->PSSetShaderResources(0, 1, &_pTextureRV);
+		(*pContext)->PSSetShaderResources(_slot, 1, &_pTextureRV);
 	}
 
 	void Texture::Use()

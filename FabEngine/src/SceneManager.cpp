@@ -49,6 +49,7 @@ namespace Fab
 			{
 				const char* file = textureElement->Attribute("file");
 				const char* name = textureElement->Attribute("name");
+				int slot         = textureElement->IntAttribute("slot");
 
 				WCHAR* fileW;
 
@@ -56,7 +57,7 @@ namespace Fab
 				fileW = new WCHAR[nChars];
 				MultiByteToWideChar(CP_ACP, 0, file, -1, (LPWSTR)fileW, nChars);
 
-				_textureManager.Load(fileW, std::string(name));
+				_textureManager.Load(fileW, std::string(name), slot);
 
 				delete[] fileW;
 			}
@@ -71,6 +72,8 @@ namespace Fab
 				std::string file = modelElement->Attribute("file");
 				std::string name = modelElement->Attribute("name");
 				const char* texture = modelElement->Attribute("texture");
+				const char* specular = modelElement->Attribute("specular");
+				const char* normal = modelElement->Attribute("normal");
 
 				_modelManager.Load(file, name);
 
@@ -81,6 +84,16 @@ namespace Fab
 					if (texture != nullptr)
 					{
 						model.GetMeshes().at(0)->SetTexture(_textureManager.GetTexturePtr(texture));
+					}
+
+					if (specular != nullptr)
+					{
+						model.GetMeshes().at(0)->SetSpecular(_textureManager.GetTexturePtr(specular));
+					}
+
+					if (normal != nullptr)
+					{
+						model.GetMeshes().at(0)->SetNormal(_textureManager.GetTexturePtr(normal));
 					}
 
 					XMMATRIX matrix = XMMatrixIdentity();

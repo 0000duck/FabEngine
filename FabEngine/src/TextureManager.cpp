@@ -15,10 +15,10 @@ namespace Fab
 	{
 	}
 
-	void TextureManager::Load(WCHAR* fileName, std::string name)
+	void TextureManager::Load(WCHAR* fileName, std::string name, int slot)
 	{
 		{
-			TexturePtr texture(new Texture(fileName));
+			TexturePtr texture(new Texture(fileName, slot));
 			texture->Load();
 			InsertTexture(name, std::move(texture));
 		}

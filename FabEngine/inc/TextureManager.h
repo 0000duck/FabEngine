@@ -13,7 +13,7 @@ namespace Fab
 		TextureManager();
 		~TextureManager();
 		void       Initialise();
-		void       Load(WCHAR* fileName, std::string name);
+		void       Load(WCHAR* fileName, std::string name, int slot);
 		void       InsertTexture(std::string name, TexturePtr shader);
 		Texture&   GetTexture(std::string name);
 		TexturePtr GetTexturePtr(std::string name);

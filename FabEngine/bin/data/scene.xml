@@ -4,7 +4,9 @@
 		<color r="1.0" g="1.0" b="0.9" i="0.2"/>
 	</ambient>
 	<textures>
-		<texture file="textures/cube-color.dds" name="cube-color"/>
+		<texture file="textures/cube-color.dds" name="cube-color" slot="0"/>
+		<texture file="textures/cube-specular.dds" name="cube-specular" slot="1"/>
+		<texture file="textures/cube-normal.dds" name="cube-normal" slot="2"/>
 	</textures>
 	<models>
 		<model file="models/monkey-medium.blend" name="monkey">
@@ -19,12 +21,12 @@
 				<transformation type="translation" x="-2.5" y="0.0" z="0.0"/>
 			</transformations>
 		</model>
-		<model file="models/cube.blend" name="cube" texture="cube-color">
+		<model file="models/cube.blend" name="cube" texture="cube-color" specular="cube-specular" normal="cube-specular">
 			<transformations></transformations>
 		</model>
 	</models>
 	<lights>
-		<light type="directional" name="diffuse" rotation-axe="y" rotation-value="0.78539816339"> <!-- PI/4 -->
+		<light type="directional" name="diffuse"  > <!-- PI/4 -->
 			<color r="1.0" g="1.0" b="0.9" i="0.5"/>
 		</light>
 		<light type="point" name="point" radius="20.0">
