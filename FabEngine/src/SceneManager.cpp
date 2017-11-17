@@ -41,6 +41,40 @@ namespace Fab
 			_ambientColor.w = colorElement->FloatAttribute("i", _ambientColor.w);
 		}
 
+		//load fog
+		{
+			tinyxml2::XMLElement* effectsElement = sceneElement->FirstChildElement("effects");
+
+			for (tinyxml2::XMLElement* effectElement = effectsElement->FirstChildElement("effect"); effectElement != nullptr; effectElement = effectElement->NextSiblingElement())
+			{
+				std::string type = effectElement->Attribute("type");
+
+				if (type == "fog")
+				{
+					float fogStart = effectElement->FloatAttribute("start");
+					float fogRange = effectElement->FloatAttribute("range");
+
+					tinyxml2::XMLElement* colorElement = effectElement->FirstChildElement("color");
+					XMFLOAT4 fogColor;
+
+					fogColor.x = colorElement->FloatAttribute("r", fogColor.x);
+					fogColor.y = colorElement->FloatAttribute("g", fogColor.y);
+					fogColor.z = colorElement->FloatAttribute("b", fogColor.z);
+					fogColor.w = colorElement->FloatAttribute("i", fogColor.w);
+
+					Fog fog(fogColor, fogStart, fogRange);
+				}
+				else if (type == "filter")
+				{
+					std::string filterType = effectElement->Attribute("filter");
+					Filter filter(filterType);
+				}
+				else if (type == "blur")
+				{
+				}
+			}
+		}
+
 		//load textures
 		{
 			tinyxml2::XMLElement* texturesElement = sceneElement->FirstChildElement("textures");
@@ -201,6 +235,7 @@ namespace Fab
 	void SceneManager::Draw()
 	{
 		_camera.Draw();
+		_frustum.BuildFrustum(_camera.GetView(), _camera.GetProjection(), _camera.GetFarZ());
 
 		for (auto& light : _lights)
 		{
@@ -209,7 +244,15 @@ namespace Fab
 
 		for (auto& entity : _models)
 		{
-			entity.second->Draw();
+			std::vector<MeshPtr>& meshes = entity.second->GetMeshes();
+
+			for (auto mesh : meshes)
+			{
+				if (_frustum.CheckSphere(_camera.GetView(), _camera.GetProjection(), mesh->GetPosition(), 0.5f))
+				{
+					mesh->Draw();
+				}
+			}
 		}
 	}
 

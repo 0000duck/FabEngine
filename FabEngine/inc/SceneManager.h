@@ -10,9 +10,18 @@
 #include "PointLight.h"
 #include "Model.h"
 #include "Mesh.h"
+#include "Fog.h"
+#include "Filter.h"
+#include "Blur.h"
+#include "Frustum.h"
 
 namespace Fab
 {
+	enum class FilterType
+	{
+		NONE, INVERT, SEPIA, GREYSCALE
+	};
+
 	class SceneManager
 	{
 	public:
@@ -37,6 +46,7 @@ namespace Fab
 		D3D11RenderSystem&              _renderSystem;
 		ModelManager                    _modelManager;
 		TextureManager                  _textureManager;
+		Frustum                         _frustum;
 
 		std::map<std::string, ModelPtr> _models;
 		std::map<std::string, LightPtr> _lights;

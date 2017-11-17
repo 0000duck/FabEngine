@@ -10,6 +10,11 @@ float3 get_scalar_color_contribution(float4 light, float color)
 	return light.rgb * light.a * color;
 }
 
+float get_fog_amount(float3 viewDirection, float fogStart, float fogRange)
+{
+	return saturate((length(viewDirection) - fogStart) / (fogRange));
+}
+
 float2 get_corrected_texture_coordinate(float2 textureCoordinate)
 {
 	return textureCoordinate;
@@ -42,6 +47,16 @@ cbuffer FrameConstantBuffer : register( b0 )
 	float4 LightPosition;        //float3
 
 	float4 LightType;            //int
+
+	float4 FogEnabled;           //int
+	float4 FogColor;
+	float4 FogStart;             //float
+	float4 FogRange;			 //float
+
+	float4 FilterColorEnabled;   //int
+	float4 FilterColor;
+
+	float4 BlurEnabled;          //float
 }
 
 Texture2D ColorTexture : register(t0);
@@ -75,6 +90,8 @@ struct VS_OUTPUT
 	float4 DirectionalDirection : COLOR3;
 
 	float4 LightDirection       : COLOR4;
+
+	float  FogAmount            : TEXCOORD1;
 };
 
 VS_OUTPUT vertex_shader( VS_INPUT IN )
@@ -108,6 +125,12 @@ VS_OUTPUT vertex_shader( VS_INPUT IN )
 		OUT.LightViewDirection = normalize(CameraPosition.xyz - worldPosition);
 	}
 
+	//Fog
+	if (FogEnabled.x == 1.0f)
+	{
+		OUT.FogAmount = get_fog_amount(worldPosition - CameraPosition.xyz, FogStart.x, FogRange.x);
+	}
+
     return OUT;
 }
 
@@ -117,7 +140,8 @@ float4 pixel_shader( VS_OUTPUT IN ) : SV_Target
 	
 	float3 normal                   = (float3)0;
 
-	if (HasNormal.x == 1.0f)
+	//Normal mapping
+	if (HasNormal.x == 3.0f)
 	{
 		float3 sampledNormal = (2 * NormalTexture.Sample(ColorSampler, IN.Texture).xyz) - 1.0f;
 		float3x3 tbn         = float3x3(IN.Tangent, IN.Binormal, IN.Normal);
@@ -134,6 +158,7 @@ float4 pixel_shader( VS_OUTPUT IN ) : SV_Target
 
 	float4 color = 0.0f;
 
+	//Add texture or color
 	if (HasMaterial.x == 0.0f)
 	{
 		color = IN.Color;
@@ -183,6 +208,7 @@ float4 pixel_shader( VS_OUTPUT IN ) : SV_Target
 		}
 	}
 
+	//Specular
 	if (HasSpecular.x == 1.0f)
 	{
 		specular.xyz *= SpecularTexture.Sample(ColorSampler, IN.Texture).xyz;
@@ -190,6 +216,55 @@ float4 pixel_shader( VS_OUTPUT IN ) : SV_Target
 
 	OUT.rgb = ambient + diffuse + specular;
 	OUT.a = 1.0f;
+
+	//Fog
+	if (FogEnabled.x == 1.0f)
+	{
+		OUT.rgb = lerp(OUT.rgb, FogColor.xyz, IN.FogAmount);
+	}
+
+	//Color Filter
+	if (FilterColorEnabled.x == 1.0f)
+	{
+		if (FilterColor.x == 2.0f)
+		{
+			float4x4 colorFilter = {
+				0.299f, 0.299f, 0.299f, 0.0f,
+				0.587f, 0.587f, 0.587f, 0.0f,
+				0.144f, 0.144f, 0.144f, 0.0f,
+				0.0f, 0.0f, 0.0f, 1.0f
+			};
+
+			OUT = float4(mul(OUT, colorFilter).rgb, OUT.a);
+		}
+		else if (FilterColor.x == 3.0f)
+		{
+			float4x4 colorFilter = {
+				0.393f, 0.359f, 0.272f, 0.0f,
+				0.769f, 0.686f, 0.534f, 0.0f,
+				0.189f, 0.168f, 0.131f, 0.0f,
+				0.0f, 0.0f, 0.0f, 0.0f
+			};
+
+			OUT = float4(mul(OUT, colorFilter).rgb, OUT.a);
+		}
+		else if (FilterColor.x == 4.0f)
+		{
+			float4x4 colorFilter = {
+				-1.0f, 0.0f, 0.0f, 0.0f,
+				0.0f, -1.0f, 0.0f, 0.0f,
+				0.0f, 0.0f, -1.0f, 0.0f,
+				1.0f, 1.0f, 1.0f, 1.0f
+			};
+
+			OUT = float4(mul(OUT, colorFilter).rgb, OUT.a);
+		}
+		
+		if (BlurEnabled.x == 1.0f)
+		{
+
+		}
+	}
 
 	return OUT;
 }

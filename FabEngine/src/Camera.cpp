@@ -382,4 +382,9 @@ namespace Fab
 	{
 		return _projection;
 	}
+
+	float Camera::GetFarZ()
+	{
+		return _farZ;
+	}
 }

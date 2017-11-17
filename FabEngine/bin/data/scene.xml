@@ -3,6 +3,13 @@
 	<ambient>
 		<color r="1.0" g="1.0" b="0.9" i="0.2"/>
 	</ambient>
+	<effects>
+		<effect type="fog" start="5.0" range="20.0">
+			<color r="0.69" g="0.77" b="0.87" i="1.0"/>
+		</effect>
+		<effect type="blur"></effect>
+		<effect type="filter" filter="none"></effect>
+	</effects>
 	<textures>
 		<texture file="textures/cube-color.dds" name="cube-color" slot="0"/>
 		<texture file="textures/cube-specular.dds" name="cube-specular" slot="1"/>

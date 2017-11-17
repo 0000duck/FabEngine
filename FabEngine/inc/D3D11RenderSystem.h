@@ -38,6 +38,16 @@ namespace Fab
 		XMFLOAT4 LightPosition;   //float3
 
 		XMFLOAT4 LightType;       //int
+
+		XMFLOAT4 FogEnabled;
+		XMFLOAT4 FogColor;
+		XMFLOAT4 FogStart;
+		XMFLOAT4 FogRange;
+
+		XMFLOAT4 FilterColorEnabled;
+		XMFLOAT4 FilterColor;
+
+		XMFLOAT4 BlurEnabled;
 	};
 
 	class D3D11RenderSystem
@@ -91,5 +101,7 @@ namespace Fab
 		UINT                      _4xMsaaQuality;
 
 		ID3D11SamplerState *      _pColorSampler;
+
+		ID3D11RasterizerState*     _backFaceCulling;
 	};
 }

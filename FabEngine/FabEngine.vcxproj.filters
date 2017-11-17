@@ -73,6 +73,12 @@
     <Filter Include="Fichiers sources\Graphics\Texture">
       <UniqueIdentifier>{4967dd23-920b-45f0-97fb-384a9e9f47c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Graphics\Shader\Effect">
+      <UniqueIdentifier>{d6d47287-43b9-45ed-8eb4-4169f629969e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Graphics\Shader\Effect">
+      <UniqueIdentifier>{eeff1545-354e-47a5-a53e-0e8a82e3d185}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -156,6 +162,21 @@
     <ClCompile Include="src\TextureManager.cpp">
       <Filter>Fichiers sources\Graphics\Texture</Filter>
     </ClCompile>
+    <ClCompile Include="src\IEffect.cpp">
+      <Filter>Fichiers sources\Graphics\Shader\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fog.cpp">
+      <Filter>Fichiers sources\Graphics\Shader\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Blur.cpp">
+      <Filter>Fichiers sources\Graphics\Shader\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Filter.cpp">
+      <Filter>Fichiers sources\Graphics\Shader\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Frustum.cpp">
+      <Filter>Fichiers sources\Graphics\Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Timer.h">
@@ -169,9 +190,6 @@
     </ClInclude>
     <ClInclude Include="inc\DirectXComponentsPCH.h">
       <Filter>Fichiers d%27en-tête\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Vertex.h">
-      <Filter>Fichiers d%27en-tête\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\IEntity.h">
       <Filter>Fichiers d%27en-tête\Core\Scene</Filter>
@@ -238,6 +256,24 @@
     </ClInclude>
     <ClInclude Include="inc\TextureManager.h">
       <Filter>Fichiers d%27en-tête\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Effect.h">
+      <Filter>Fichiers d%27en-tête\Graphics\Shader\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Fog.h">
+      <Filter>Fichiers d%27en-tête\Graphics\Shader\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Blur.h">
+      <Filter>Fichiers d%27en-tête\Graphics\Shader\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Filter.h">
+      <Filter>Fichiers d%27en-tête\Graphics\Shader\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Vertex.h">
+      <Filter>Fichiers d%27en-tête\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Frustum.h">
+      <Filter>Fichiers d%27en-tête\Graphics\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

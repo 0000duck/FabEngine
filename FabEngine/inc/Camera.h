@@ -55,6 +55,7 @@ namespace Fab
 
 		XMFLOAT4X4& GetView();
 		XMFLOAT4X4& GetProjection();
+		float       GetFarZ();
 
 	public:
 		static const float      DefaultFov;

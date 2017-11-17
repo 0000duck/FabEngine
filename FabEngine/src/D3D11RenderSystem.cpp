@@ -183,6 +183,14 @@ namespace Fab
 		hr =_pd3dDevice->CreateSamplerState(&sampDesc, &_pColorSampler);
 		_pImmediateContext->PSSetSamplers(0, 1, &_pColorSampler);
 
+		D3D11_RASTERIZER_DESC wfdescBackFaceCulling;
+		ZeroMemory(&wfdescBackFaceCulling, sizeof(D3D11_RASTERIZER_DESC));
+		wfdescBackFaceCulling.FillMode = D3D11_FILL_SOLID;
+		wfdescBackFaceCulling.CullMode = D3D11_CULL_BACK;
+		hr = _pd3dDevice->CreateRasterizerState(&wfdescBackFaceCulling, &_backFaceCulling);
+
+		_pImmediateContext->RSSetState(_backFaceCulling);
+
 		return S_OK;
 	}
 
