@@ -24,6 +24,9 @@ namespace Fab
 		XMFLOAT4  GetColor();
 		LightType GetType();
 
+		void SetModel(ModelPtr& model);
+		ModelPtr& GetModelPtr();
+
 	public:
 		static const XMFLOAT4 DefaultColor;
 
@@ -32,6 +35,8 @@ namespace Fab
 
 		XMFLOAT4  _color;
 		LightType _type;
+
+		ModelPtr _model;
 	};
 
 	typedef std::shared_ptr<Light> LightPtr;

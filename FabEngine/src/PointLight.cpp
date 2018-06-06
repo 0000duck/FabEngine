@@ -3,7 +3,7 @@
 
 namespace Fab
 {
-	const XMFLOAT3 PointLight::DefaultPosition = XMFLOAT3(0.0f, 2.0f, 4.0f);
+	const XMFLOAT3 PointLight::DefaultPosition = XMFLOAT3(0.0f, 2.0f, 0.0f);
 	const float PointLight::DefaultRadius      = 1.0f;
 
 	PointLight::PointLight(LightType type)
@@ -19,6 +19,10 @@ namespace Fab
 
 	void PointLight::Initialise()
 	{
+		XMMATRIX matrix = XMMatrixIdentity();
+		matrix *= XMMatrixScaling(0.25f, 0.25f, 0.25f);
+		matrix *= XMMatrixTranslation(_position.x, _position.y, _position.z);
+		_model->GetMeshes().at(0)->Transform(matrix);
 	}
 
 	void PointLight::Draw()
@@ -40,24 +44,26 @@ namespace Fab
 		Keyboard& keyboard = static_cast<Keyboard&>(Application::GetApplication().GetComponent(ComponentType::KEYBOARD));
 		Mouse& mouse = static_cast<Mouse&>(Application::GetApplication().GetComponent(ComponentType::MOUSE));
 
-		if (keyboard.IsKeyPressed(KeyName::ARROW_UP))
-		{
-			_position.z -= deltaTime * 4.0f;
-		}
+		XMFLOAT3 oldPosition = _position;
 
-		if (keyboard.IsKeyPressed(KeyName::ARROW_DOWN))
+		if (keyboard.IsKeyPressed(KeyName::ARROW_UP))
 		{
 			_position.z += deltaTime * 4.0f;
 		}
 
+		if (keyboard.IsKeyPressed(KeyName::ARROW_DOWN))
+		{
+			_position.z -= deltaTime * 4.0f;
+		}
+
 		if (keyboard.IsKeyPressed(KeyName::ARROW_LEFT))
 		{
-			_position.x += deltaTime * 4.0f;
+			_position.x -= deltaTime * 4.0f;
 		}
 
 		if (keyboard.IsKeyPressed(KeyName::ARROW_RIGHT))
 		{
-			_position.x -= deltaTime * 4.0f;
+			_position.x += deltaTime * 4.0f;
 		}
 
 		if (keyboard.IsKeyPressed(KeyName::P))
@@ -69,6 +75,11 @@ namespace Fab
 		{
 			_position.y += deltaTime * 4.0f;
 		}
+
+		//Update light model position
+		XMMATRIX matrix = XMMatrixIdentity();
+		matrix *= XMMatrixTranslation(_position.x - oldPosition.x, oldPosition.y - _position.y, _position.z - oldPosition.z);
+		_model->GetMeshes().at(0)->Transform(matrix);
 	}
 
 	void PointLight::SetPosition(XMFLOAT3 position)

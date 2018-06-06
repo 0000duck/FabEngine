@@ -48,6 +48,7 @@ namespace Fab
 
 		CameraMode  GetMode();
 
+		XMFLOAT3&   GetOldPosition();
 		XMFLOAT3&   GetPosition();
 		XMFLOAT3&   GetRight();
 		XMFLOAT3&   GetLook();

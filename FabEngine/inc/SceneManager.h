@@ -38,6 +38,7 @@ namespace Fab
 
 	private:
 		void     UpdateAmbientColor();
+		void     UpdateAmbientColorSkyDome();
 
 	public:
 		static const XMFLOAT4 DefaultAmbientColor;
@@ -51,7 +52,11 @@ namespace Fab
 		std::map<std::string, ModelPtr> _models;
 		std::map<std::string, LightPtr> _lights;
 		Camera                          _camera;
+		ModelPtr                        _skyDome;
 
+		XMFLOAT4                        _ambientColorSkyDome;
 		XMFLOAT4                        _ambientColor;
+
+		XMFLOAT3                        _positionSkyBox;
 	};
 }

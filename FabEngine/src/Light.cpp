@@ -30,4 +30,14 @@ namespace Fab
 	{
 		return _type;
 	}
+
+	void Light::SetModel(ModelPtr& model)
+	{
+		_model = model;
+	}
+
+	ModelPtr& Light::GetModelPtr()
+	{
+		return _model;
+	}
 }

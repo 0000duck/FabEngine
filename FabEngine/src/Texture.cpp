@@ -29,7 +29,7 @@ namespace Fab
 	void Texture::Use()
 	{
 		ID3D11DeviceContext** pContext = _renderSystem.GetPImmediateContext();
-		(*pContext)->PSSetShaderResources(0, 1, &_pTextureRV);
+		(*pContext)->PSSetShaderResources(_slot, 1, &_pTextureRV);
 	}
 
 	ID3D11ShaderResourceView** Texture::GetResource()

@@ -120,7 +120,7 @@ VS_OUTPUT vertex_shader( VS_INPUT IN )
 	if (LightType.x == 1.0f || LightType.x == 2.0f)
 	{
 		float3 lightDirection  = (LightPosition.xyz) - worldPosition;
-		OUT.LightDirection.xyz = normalize(-(lightDirection.xyz));
+		OUT.LightDirection.xyz = normalize((lightDirection.xyz));
 		OUT.LightDirection.w   = saturate(1.0f - (length(-lightDirection) / LightRadius.x));
 		OUT.LightViewDirection = normalize(CameraPosition.xyz - worldPosition);
 	}
@@ -141,7 +141,7 @@ float4 pixel_shader( VS_OUTPUT IN ) : SV_Target
 	float3 normal                   = (float3)0;
 
 	//Normal mapping
-	if (HasNormal.x == 3.0f)
+	if (HasNormal.x == 1.0f)
 	{
 		float3 sampledNormal = (2 * NormalTexture.Sample(ColorSampler, IN.Texture).xyz) - 1.0f;
 		float3x3 tbn         = float3x3(IN.Tangent, IN.Binormal, IN.Normal);

@@ -3,10 +3,10 @@
 
 namespace Fab
 {
-	const float Camera::DefaultFov              = XM_PIDIV4;
+	const float Camera::DefaultFov              = 0.95f;
 	const float Camera::DefaultNearZ            = 0.01f;
-	const float Camera::DefaultFarZ             = 100.0f;
-	const float Camera::DefaultTranslationSpeed = 4.0f;
+	const float Camera::DefaultFarZ             = 160.0f;
+	const float Camera::DefaultTranslationSpeed = 5.0f;
 	const float Camera::DefaultRotationSpeed    = 0.4f;
 	const CameraMode Camera::DefaultMode        = CameraMode::FLY;
 
@@ -296,6 +296,7 @@ namespace Fab
 
 	void Camera::Move(float distanceX, float distanceY, float distanceZ)
 	{
+		_oldPosition = _position;
 		XMFLOAT3 movementAmount(distanceX, distanceY, distanceZ);
 
 		XMVECTOR right    = XMLoadFloat3(&_right);
@@ -351,6 +352,11 @@ namespace Fab
 	CameraMode Camera::GetMode()
 	{
 		return _mode;
+	}
+
+	XMFLOAT3& Camera::GetOldPosition()
+	{
+		return _oldPosition;
 	}
 	
 	XMFLOAT3& Camera::GetPosition()

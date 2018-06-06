@@ -289,4 +289,8 @@
   <ItemGroup>
     <FxCompile Include="bin\shaders\default.fx" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagramLarge.cd" />
+  </ItemGroup>
 </Project>

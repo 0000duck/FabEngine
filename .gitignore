@@ -1,1 +1,10 @@
+## Fab Engine ignore files
+
+*.ilk
+*.pdb
+*.exe
+*.VC.db
+*.iobj
+*.ipdb
 ./Debug
+.vs/

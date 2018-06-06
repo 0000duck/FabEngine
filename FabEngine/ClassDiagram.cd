@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Fab::Application" Collapsed="true">
+    <Position X="9.75" Y="6.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ISQAEEADATIgIwECQgQABAAAIBACAAQQEIhgQAIAYQI=</HashCode>
+      <FileName>inc\Application.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::D3D11RenderSystem" Collapsed="true">
+    <Position X="9" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IKCgCAIMgACAAxgAJAAAAAAAEAMBAIJABAgggEBAIQA=</HashCode>
+      <FileName>inc\Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Keyboard" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwQAAAAAAAAAQACAAAAAAAAAAAAAAAAACAABAAAAAA=</HashCode>
+      <FileName>inc\Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Mouse" Collapsed="true">
+    <Position X="12.5" Y="1.75" Width="1.75" />
+    <InheritanceLine Type="Fab::IComponent" ManuallyRouted="true">
+      <Path>
+        <Point X="11.25" Y="1.062" />
+        <Point X="11.25" Y="1.429" />
+        <Point X="13.375" Y="1.429" />
+        <Point X="13.375" Y="1.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAQBAEBAACAAARkAQAAiAAAAAAAAAAAQAAAAhAAAAAA=</HashCode>
+      <FileName>inc\Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Camera" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <InheritanceLine Type="Fab::IComponent" ManuallyRouted="true">
+      <Path>
+        <Point X="11.25" Y="1.062" />
+        <Point X="11.25" Y="1.451" />
+        <Point X="9" Y="1.451" />
+        <Point X="9" Y="1.75" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="Fab::IEntity" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.25" Y="1.062" />
+        <Point X="3.25" Y="1.437" />
+        <Point X="6.801" Y="1.437" />
+        <Point X="6.801" Y="2.188" />
+        <Point X="8.25" Y="2.188" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>IAQLWQIBIKgCA4EAQiAEQQAAEYAAIYQwICBDgIAAUhg=</HashCode>
+      <FileName>inc\Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::IComponent" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQQQAAAAAAAAAAAAAAEAQAAAAAAAAAA=</HashCode>
+      <FileName>inc\IComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::IEntity" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAwAAAAAAAAAABAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>inc\IEntity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::SceneManager" Collapsed="true">
+    <Position X="12.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAACEACEA0QAAAAAIAAiIAAAIAAQAAAAAGgAAAQ=</HashCode>
+      <FileName>inc\SceneManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Shader" Collapsed="true">
+    <Position X="8" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wAAACAAAaAAAIAAAAAAAAAABAAAEAAARBAAAAAhBQFE=</HashCode>
+      <FileName>inc\Shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::ShaderManager" Collapsed="true">
+    <Position X="8" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAACAQRAAEAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>inc\ShaderManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Timer" Collapsed="true">
+    <Position X="9" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAABAAAICAAJAABAAAAAAAAAQAAAAEAMCAAEEAEQAA=</HashCode>
+      <FileName>inc\Timer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Model" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAAAAAAAAwAAAAEAAAAAAAAAAAAAwAgAAAAAAAA=</HashCode>
+      <FileName>inc\Model.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Texture" Collapsed="true">
+    <Position X="10.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAgAgAAAAAAAAAIBAAAEAAAQAAIACAAAAAA=</HashCode>
+      <FileName>inc\Mesh.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Mesh" Collapsed="true">
+    <Position X="4.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAASEIJwAIAgAEACYAgCBAkACQRQARhgAAAEA=</HashCode>
+      <FileName>inc\Mesh.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::ModelManager" Collapsed="true">
+    <Position X="11.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAACAAQQAABAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>inc\ModelManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::ModelLoader" Collapsed="true">
+    <Position X="11.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgEAAAAAAAABAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>inc\ModelLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::MeshLoader" Collapsed="true">
+    <Position X="11.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAIAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>inc\MeshLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::PointLight" Collapsed="true">
+    <Position X="2.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAAAAAACAAAxAAAACAAAgAAAAAAgAAAAAAoAiAAAA=</HashCode>
+      <FileName>inc\PointLight.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::DirectionalLight" Collapsed="true">
+    <Position X="4.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQAABAAIA4AAAAAQAAAAAAAAAQAAAAAIAIAAQAA=</HashCode>
+      <FileName>inc\DirectionalLight.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::SpotLight" Collapsed="true">
+    <Position X="2.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BIQAAAAABABIA4AAABKCIQAAAAAAAQAAAAAIAIAAQCA=</HashCode>
+      <FileName>inc\SpotLight.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Light" Collapsed="true">
+    <Position X="2.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAIAASAAAAAAgAAAAAAAAGQAAgAAAAAAAA=</HashCode>
+      <FileName>inc\Light.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::TextureManager" Collapsed="true">
+    <Position X="10.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAACAQAAAQAABAAAAAAAJAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>inc\TextureManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::IEffect" Collapsed="true">
+    <Position X="2.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAwAAAAAAAAAAAAAAAIAAAAAAAAAQAAA=</HashCode>
+      <FileName>inc\Effect.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Fog" Collapsed="true">
+    <Position X="0.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAwAAQAAAEAAAIAACAAAQAAAAAAAIAAA=</HashCode>
+      <FileName>inc\Fog.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Blur" Collapsed="true">
+    <Position X="2.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAwAAAAAAAAAAAAAAAAAQAAAAAAAAAEA=</HashCode>
+      <FileName>inc\Blur.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Filter" Collapsed="true">
+    <Position X="4.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUABAAAAAAAAwQQAAAEAAAAABAAAAAQAAAAEAAAAAA=</HashCode>
+      <FileName>inc\Filter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fab::Frustum" Collapsed="true">
+    <Position X="12.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACQAAAAEAAAAIAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>inc\Frustum.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Fab::FrameConstantBuffer" Collapsed="true">
+    <Position X="9" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JQAAAACAABAAAIAgBRAAAAAAAAABAACAAAIgAEYRADA=</HashCode>
+      <FileName>inc\D3D11RenderSystem.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Fab::Key" Collapsed="true">
+    <Position X="10.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAQQAAAAAAAAAAAAgAAAEAAA=</HashCode>
+      <FileName>inc\Keyboard.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Fab::MouseButton" Collapsed="true">
+    <Position X="12.5" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAQQAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>inc\Mouse.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Fab::VertexData" Collapsed="true">
+    <Position X="4.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAACAIAAACAAIAgAAAQAA=</HashCode>
+      <FileName>inc\Vertex.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Fab::MeshData" Collapsed="true">
+    <Position X="4.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAEAAAAAAAAAAAAAACAAAAAAAECAAAAAAAAA=</HashCode>
+      <FileName>inc\Mesh.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Fab::CameraMode" Collapsed="true">
+    <Position X="8.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>inc\Camera.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Fab::ComponentType" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAgAAAAACAAAAIAAAAAAAAA=</HashCode>
+      <FileName>inc\IComponent.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Fab::KeyName" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgAECAAAAAAAAACAAAAQAAAgAAAAEABAAAAAvv//YQE=</HashCode>
+      <FileName>inc\Keyboard.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Fab::MouseButtonName" Collapsed="true">
+    <Position X="12.5" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAQAAAAAAAAAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>inc\Mouse.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Fab::MouseButtonState" Collapsed="true">
+    <Position X="12.5" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>inc\Mouse.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Fab::FilterType" Collapsed="true">
+    <Position X="4.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>inc\SceneManager.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Fab::LightType" Collapsed="true">
+    <Position X="2.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAIAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>inc\Light.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

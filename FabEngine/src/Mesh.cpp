@@ -3,7 +3,7 @@
 
 namespace Fab
 {
-	const XMFLOAT4 Mesh::DefaultSpecularColor = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	const XMFLOAT4 Mesh::DefaultSpecularColor = XMFLOAT4(1.0f, 1.0f, 1.0f, 0.5f);
 	const float Mesh::DefaultSpecularPower = 64.0f;
 
 	Mesh::Mesh()
@@ -81,18 +81,27 @@ namespace Fab
 
 		_shader->Use();
 
-		if (_texture != nullptr)
+		if (_texture != nullptr) 
+		{
+			_texture->Use();
 			pFrameConstantBufferUpdate->HasMaterial = XMFLOAT4(1.0f, 0.0f, 0.0f, 0.0f);
+		}
 		else
 			pFrameConstantBufferUpdate->HasMaterial = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 
 		if (_specular != nullptr)
+		{
+			_specular->Use();
 			pFrameConstantBufferUpdate->HasSpecular = XMFLOAT4(1.0f, 0.0f, 0.0f, 0.0f);
+		}
 		else
 			pFrameConstantBufferUpdate->HasSpecular = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 
 		if (_normal != nullptr)
+		{
+			_normal->Use();
 			pFrameConstantBufferUpdate->HasNormal = XMFLOAT4(1.0f, 0.0f, 0.0f, 0.0f);
+		}
 		else
 			pFrameConstantBufferUpdate->HasNormal = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 

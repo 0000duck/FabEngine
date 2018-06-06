@@ -102,6 +102,6 @@ namespace Fab
 
 		ID3D11SamplerState *      _pColorSampler;
 
-		ID3D11RasterizerState*     _backFaceCulling;
+		ID3D11RasterizerState*    _backFaceCulling;
 	};
 }

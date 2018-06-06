@@ -91,7 +91,7 @@ namespace Fab
 				positionVector.y * position.y + 
 				positionVector.z * position.z + positionVector.w;
 
-			if (distance <= 0)
+			if (distance + 30 <= 0)
 			{
 				return false;
 			}

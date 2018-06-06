@@ -8,6 +8,7 @@ namespace Fab
 	SceneManager::SceneManager()
 		: _ambientColor(DefaultAmbientColor)
 		, _renderSystem(D3D11RenderSystem::GetRenderSystem())
+		, _ambientColorSkyDome(XMFLOAT4(1.0f, 1.0f, 1.0f, 0.75f))
 	{
 	}
 
@@ -97,35 +98,46 @@ namespace Fab
 			}
 		}
 
+		//loads 3D objects
+		{
+			tinyxml2::XMLElement* modelsElement = sceneElement->FirstChildElement("objects");
+
+			for (tinyxml2::XMLElement* modelElement = modelsElement->FirstChildElement("object"); modelElement != nullptr; modelElement = modelElement->NextSiblingElement())
+			{
+				std::string file = modelElement->Attribute("file");
+				std::string name = modelElement->Attribute("name");
+
+				_modelManager.Load(file, name);
+			}
+		}
+
 		//load models
 		{
 			tinyxml2::XMLElement* modelsElement = sceneElement->FirstChildElement("models");
 
 			for (tinyxml2::XMLElement* modelElement = modelsElement->FirstChildElement("model"); modelElement != nullptr; modelElement = modelElement->NextSiblingElement())
 			{
-				std::string file = modelElement->Attribute("file");
+				std::string object = modelElement->Attribute("object");
 				std::string name = modelElement->Attribute("name");
 				const char* texture = modelElement->Attribute("texture");
 				const char* specular = modelElement->Attribute("specular");
 				const char* normal = modelElement->Attribute("normal");
 
-				_modelManager.Load(file, name);
-
 				{
 					Model model;
-					_modelManager.GetModel(name, model, Colors::Silver);
+					_modelManager.GetModel(object, model, Colors::Silver);
 
-					if (texture != nullptr)
+					if (texture != nullptr && strlen(texture) > 0)
 					{
 						model.GetMeshes().at(0)->SetTexture(_textureManager.GetTexturePtr(texture));
 					}
 
-					if (specular != nullptr)
+					if (specular != nullptr && strlen(specular) > 0)
 					{
 						model.GetMeshes().at(0)->SetSpecular(_textureManager.GetTexturePtr(specular));
 					}
 
-					if (normal != nullptr)
+					if (normal != nullptr && strlen(normal) > 0)
 					{
 						model.GetMeshes().at(0)->SetNormal(_textureManager.GetTexturePtr(normal));
 					}
@@ -169,6 +181,22 @@ namespace Fab
 						}
 					}
 
+					//Parameters
+					tinyxml2::XMLElement* specularElement = modelElement->FirstChildElement("parameters")->FirstChildElement("specular");
+
+					XMFLOAT4 specularColor;
+					float    specularPower;
+
+					specularColor.x = specularElement->FloatAttribute("r");
+					specularColor.y = specularElement->FloatAttribute("g");
+					specularColor.z = specularElement->FloatAttribute("b");
+					specularColor.w = specularElement->FloatAttribute("i");
+
+					specularPower = specularElement->FloatAttribute("p");
+
+					model.GetMeshes().at(0)->SetSpecularColor(specularColor);
+					model.GetMeshes().at(0)->SetSpecularPower(specularPower);
+
 					model.GetMeshes().at(0)->Transform(matrix);
 					InsertModel(name, std::make_shared<Model>(model));
 				}
@@ -181,8 +209,9 @@ namespace Fab
 
 			for (tinyxml2::XMLElement* lightElement = lightsElement->FirstChildElement("light"); lightElement != nullptr; lightElement = lightElement->NextSiblingElement())
 			{
-				std::string type = lightElement->Attribute("type");
-				std::string name = lightElement->Attribute("name");
+				std::string type   = lightElement->Attribute("type");
+				std::string name   = lightElement->Attribute("name");
+				const char* object = lightElement->Attribute("object");
 
 				XMFLOAT4 color;
 
@@ -221,14 +250,41 @@ namespace Fab
 				}
 				else if (type == "point")
 				{
+					XMFLOAT4 specularColor(1.0f, 1.0f, 0.5f, 1.0f);
+					float    specularPower = 64.0f;
+
 					PointLight light;
 					light.SetColor(color);
 					light.SetRadius(20.0f);
+
+					Model model;
+					_modelManager.GetModel(object, model, Colors::Yellow);
+					model.GetMeshes().at(0)->SetSpecularColor(specularColor);
+					model.GetMeshes().at(0)->SetSpecularPower(specularPower);
+					light.SetModel(std::make_shared<Model>(model));
+					light.Initialise();
+
 					InsertLight("point", std::make_shared<PointLight>(light));
 				}
 			}
 		}
 
+		//Load SkyDome
+		Model model;
+		_modelManager.GetModel("sky", model, Colors::Silver);
+		model.GetMeshes().at(0)->SetTexture(_textureManager.GetTexturePtr("sky-diffuse"));
+		model.GetMeshes().at(0)->SetSpecularColor(XMFLOAT4(1.0f, 1.0f, 1.0f, 0.0f));
+		model.GetMeshes().at(0)->SetSpecularPower(8.0f);
+
+		XMMATRIX matrix = XMMatrixIdentity();
+		matrix *= XMMatrixScaling(12.0f, 12.0f, 12.0f);
+		matrix *= XMMatrixTranslation(0.0f, 24.0f, 0.0f);
+		model.GetMeshes().at(0)->Transform(matrix);
+		
+		_positionSkyBox = _camera.GetPosition();
+		_skyDome = std::make_shared<Model>(model);
+
+		//AmbientColor
 		UpdateAmbientColor();
 	}
 
@@ -236,12 +292,14 @@ namespace Fab
 	{
 		_camera.Draw();
 		_frustum.BuildFrustum(_camera.GetView(), _camera.GetProjection(), _camera.GetFarZ());
-
+		
+		//Draw light
 		for (auto& light : _lights)
 		{
 			light.second->Draw();
 		}
 
+		//Draw models
 		for (auto& entity : _models)
 		{
 			std::vector<MeshPtr>& meshes = entity.second->GetMeshes();
@@ -254,6 +312,37 @@ namespace Fab
 				}
 			}
 		}
+
+		//Draw light models
+		for (auto& light : _lights)
+		{
+			ModelPtr& model = light.second->GetModelPtr();
+
+			if (model != nullptr)
+			{
+				std::vector<MeshPtr>& meshes = model->GetMeshes();
+
+				for (auto mesh : meshes)
+				{
+					if (_frustum.CheckSphere(_camera.GetView(), _camera.GetProjection(), mesh->GetPosition(), 0.5f))
+					{
+						mesh->Draw();
+					}
+				}
+			}
+		}
+
+		//Draw skydome
+		std::vector<MeshPtr>& meshes = _skyDome->GetMeshes();
+
+		UpdateAmbientColorSkyDome();
+
+		for (auto mesh : meshes)
+		{
+			mesh->Draw();
+		}
+
+		UpdateAmbientColor();
 	}
 
 	void SceneManager::Update(float deltaTime, float totalTime)
@@ -269,6 +358,18 @@ namespace Fab
 		for (auto& entity : _models)
 		{
 			entity.second->Update(deltaTime, totalTime);
+		}
+
+		XMFLOAT3 position = _camera.GetPosition();
+		XMFLOAT3 oldPosition = _camera.GetOldPosition();
+
+		if (_positionSkyBox.x != position.x || _positionSkyBox.y != position.y || _positionSkyBox.z != position.z)
+		{
+			_positionSkyBox = position;
+
+			XMMATRIX matrix = XMMatrixIdentity();
+			matrix *= XMMatrixTranslation(position.x - oldPosition.x, position.y - oldPosition.y, position.z - oldPosition.z);
+			_skyDome->GetMeshes().at(0)->Transform(matrix);
 		}
 	}
 
@@ -301,6 +402,15 @@ namespace Fab
 
 		pFrameConstantBufferUpdate->AmbientColor = _ambientColor;
 		(*pContext)->UpdateSubresource(*pFrameConstantBuffer, 0, nullptr, pFrameConstantBufferUpdate, 0, 0);
+	}
 
+	void SceneManager::UpdateAmbientColorSkyDome()
+	{
+		FrameConstantBuffer* pFrameConstantBufferUpdate = _renderSystem.GetFrameConstantBufferUpdate();
+		ID3D11Buffer** pFrameConstantBuffer = _renderSystem.GetFrameConstantBuffer();
+		ID3D11DeviceContext** pContext = _renderSystem.GetPImmediateContext();
+
+		pFrameConstantBufferUpdate->AmbientColor = _ambientColorSkyDome;
+		(*pContext)->UpdateSubresource(*pFrameConstantBuffer, 0, nullptr, pFrameConstantBufferUpdate, 0, 0);
 	}
 }
